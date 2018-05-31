@@ -4,4 +4,6 @@
     <dimen name="margin_material">16dp</dimen>
     <dimen name="layout_margin20dp">20dp</dimen>
     <dimen name="layout_margin">10dp</dimen>
+    <dimen name="texto_muy_grande">25dp</dimen>
+    <dimen name="texto_chico">10sp</dimen>
 </resources>
