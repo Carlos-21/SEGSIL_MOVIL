@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "605027389459",
+    "firebase_url": "https://proyectosegsil.firebaseio.com",
+    "project_id": "proyectosegsil",
+    "storage_bucket": "proyectosegsil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605027389459:android:78deb4c17ff97441",
+        "android_client_info": {
+          "package_name": "pe.edu.unmsm.sistemas.segsil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605027389459-o2n425ii13i27k8019mn04qmd7l1k08i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.edu.unmsm.sistemas.segsil",
+            "certificate_hash": "13e64ba640a35eaf9fd50b39d46e558360bcd722"
+          }
+        },
+        {
+          "client_id": "605027389459-jfp219n3not5s2lo1gr8q74s7hvf8ke7.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "605027389459-jfp219n3not5s2lo1gr8q74s7hvf8ke7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbuFPrvhWtgvILxgN8htv_89lpo549myU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605027389459-jfp219n3not5s2lo1gr8q74s7hvf8ke7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
