@@ -3,15 +3,17 @@ package pe.edu.unmsm.sistemas.segsil.pojos;
 public class Curso {
     private String id;
     private String eap;
+    private int ciclo;
     private String nombreCurso;
     private String nombrePlan1;
     private String nombrePlan2;
     private String idCoordinador;
     private boolean silabus;
 
-    public Curso(String id, String eap, String nombreCurso, String nombrePlan1, String nombrePlan2, String idCoordinador, boolean silabus) {
+    public Curso(String id, String eap, int ciclo, String nombreCurso, String nombrePlan1, String nombrePlan2, String idCoordinador, boolean silabus) {
         this.id = id;
         this.eap = eap;
+        this.ciclo = ciclo;
         this.nombreCurso = nombreCurso;
         this.nombrePlan1 = nombrePlan1;
         this.nombrePlan2 = nombrePlan2;
@@ -36,6 +38,14 @@ public class Curso {
 
     public void setEap(String eap) {
         this.eap = eap;
+    }
+
+    public int getCiclo() {
+        return ciclo;
+    }
+
+    public void setCiclo(int ciclo) {
+        this.ciclo = ciclo;
     }
 
     public String getNombreCurso() {

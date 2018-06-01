@@ -94,6 +94,8 @@ public class MenuSilabusActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent =  new Intent(MenuSilabusActivity.this,RegistrarSilabusActivity.class);
                         intent.putExtra("nombre_curso",c.getNombreCurso());
+                        intent.putExtra("eap_curso",c.getEap());
+                        intent.putExtra("ciclo_curso",c.getCiclo());
                         intent.putExtra("id_curso",c.getId());
                         startActivity(intent);
                     }

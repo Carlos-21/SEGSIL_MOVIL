@@ -6,11 +6,81 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".RegistrarSilabusActivity">
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/registrar_silabus_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_alignParentTop="true"
+                android:id="@+id/registrar_silabus_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/registrar_silabus_txtTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TITULO"
+                    android:gravity="center"
+                    android:textColor="@color/colorIcons"/>
+                <TextView
+                    android:id="@+id/registrar_silabus_txtSubtitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Subtitulo"
+                    android:gravity="center"
+                    android:textColor="@color/colorIcons"/>
+            </LinearLayout>
+            <View
+                android:layout_below="@+id/registrar_silabus_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorIcons"/>
+            <RelativeLayout
+                android:layout_alignParentBottom="true"
+                android:id="@+id/registrar_silabus_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/registrar_silabus_btnAnterior"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Anterior"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/layout_margin10dp"
+                    android:textColor="@color/colorIcons"/>
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/registrar_silabus_btnSiguiente"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Siguiente"
+                    android:gravity="center"
+                    android:layout_marginRight="@dimen/layout_margin10dp"
+                    android:textColor="@color/colorIcons"/>
+            </RelativeLayout>
+            <View
+                android:layout_above="@+id/registrar_silabus_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorIcons"/>
+        </RelativeLayout>
+
+    </FrameLayout>
+
 
 </LinearLayout>
