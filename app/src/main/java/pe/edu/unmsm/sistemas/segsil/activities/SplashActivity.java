@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil;
+package pe.edu.unmsm.sistemas.segsil.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import pe.edu.unmsm.sistemas.segsil.R;
 
 
 public class SplashActivity extends AppCompatActivity {

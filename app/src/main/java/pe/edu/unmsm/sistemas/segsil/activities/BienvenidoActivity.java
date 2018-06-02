@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil;
+package pe.edu.unmsm.sistemas.segsil.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +17,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import pe.edu.unmsm.sistemas.segsil.R;
+import pe.edu.unmsm.sistemas.segsil.activities.admin.AdminActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.avance.MenuAvanceActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.control.MenuControlActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.silabus.MenuSilabusActivity;
 import pe.edu.unmsm.sistemas.segsil.pojos.Perfil;
 import pe.edu.unmsm.sistemas.segsil.pojos.Persona;
 import pe.edu.unmsm.sistemas.segsil.pojos.Usuario;

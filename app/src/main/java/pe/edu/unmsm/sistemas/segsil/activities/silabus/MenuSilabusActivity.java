@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil;
+package pe.edu.unmsm.sistemas.segsil.activities.silabus;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
+import pe.edu.unmsm.sistemas.segsil.holders.CursoHolder;
+import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.pojos.Curso;
 
 public class MenuSilabusActivity extends AppCompatActivity {
@@ -82,14 +85,14 @@ public class MenuSilabusActivity extends AppCompatActivity {
                 });
 
         opciones = new FirestoreRecyclerOptions.Builder<Curso>().setQuery(query, Curso.class).build();
-        adapter =  new  FirestoreRecyclerAdapter < Curso , CursoHolder > (opciones) {
+        adapter =  new  FirestoreRecyclerAdapter < Curso , CursoHolder> (opciones) {
             @Override
             public void onBindViewHolder(CursoHolder holder, int position, Curso model) {
                 final Curso c = model;
-                holder.txtEap.setText(model.getEap().toString());
-                holder.txtNombre1.setText(model.getNombrePlan1());
-                holder.txtNombre2.setText(model.getNombrePlan2());
-                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                holder.setHolderTxtEap(model.getEap().toString());
+                holder.setHolderTxtNombre1(model.getNombrePlan1());
+                holder.setHolderTxtNombre2(model.getNombrePlan2());
+                holder.getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent =  new Intent(MenuSilabusActivity.this,RegistrarSilabusActivity.class);

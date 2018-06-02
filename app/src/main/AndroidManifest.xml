@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,14 +20,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BienvenidoActivity" />
-        <activity android:name=".AdminActivity" />
-        <activity android:name=".MenuSilabusActivity" />
-        <activity android:name=".MenuAvanceActivity" />
-        <activity android:name=".MenuControlActivity" />
-        <activity android:name=".RegistrarSilabusActivity"></activity>
+        <activity android:name=".activities.BienvenidoActivity" />
+        <activity android:name=".activities.admin.AdminActivity" />
+        <activity android:name=".activities.silabus.MenuSilabusActivity" />
+        <activity android:name=".activities.avance.MenuAvanceActivity" />
+        <activity android:name=".activities.control.MenuControlActivity" />
+        <activity android:name=".activities.silabus.RegistrarSilabusActivity"></activity>
     </application>
 
 </manifest>

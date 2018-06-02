@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil;
+package pe.edu.unmsm.sistemas.segsil.fragments;
 
 
 import android.annotation.SuppressLint;
@@ -9,21 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pe.edu.unmsm.sistemas.segsil.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UnidadesFragment extends Fragment {
+public class ResumenFragment extends Fragment {
 
     String idCurso;
     Context context;
 
-    public UnidadesFragment() {
+    public ResumenFragment() {
         // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
-    public UnidadesFragment(String idCurso, Context context) {
+    public ResumenFragment(String idCurso, Context context) {
         this.idCurso = idCurso;
         this.context = context;
     }
@@ -32,7 +34,8 @@ public class UnidadesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_unidades, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_resumen, container, false);
         return rootView;
     }
 

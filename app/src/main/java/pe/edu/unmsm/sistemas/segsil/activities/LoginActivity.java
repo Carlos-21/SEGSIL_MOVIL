@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil;
+package pe.edu.unmsm.sistemas.segsil.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -16,6 +16,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import pe.edu.unmsm.sistemas.segsil.R;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnIngresar;
