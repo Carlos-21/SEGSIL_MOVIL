@@ -27,7 +27,8 @@
         <activity android:name=".activities.silabus.MenuSilabusActivity" />
         <activity android:name=".activities.avance.MenuAvanceActivity" />
         <activity android:name=".activities.control.MenuControlActivity" />
-        <activity android:name=".activities.silabus.RegistrarSilabusActivity"></activity>
+        <activity android:name=".activities.silabus.RegistrarSilabusActivity" />
+        <activity android:name=".activities.silabus.UnidadActivity"></activity>
     </application>
 
 </manifest>
