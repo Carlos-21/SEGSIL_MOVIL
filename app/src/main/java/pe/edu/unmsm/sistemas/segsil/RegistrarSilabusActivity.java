@@ -1,9 +1,12 @@
 package pe.edu.unmsm.sistemas.segsil;
 
+import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,8 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class RegistrarSilabusActivity extends AppCompatActivity {
     TextView btnAnterior;
     TextView btnSiguiente;
-    TextView txtTitulo;
-    TextView txtSubtitulo;
+    Toolbar toolbar;
+
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
     String idCurso;
@@ -29,8 +32,7 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
 
         btnAnterior = (TextView) findViewById(R.id.registrar_silabus_btnAnterior);
         btnSiguiente = (TextView) findViewById(R.id.registrar_silabus_btnSiguiente);
-        txtTitulo = (TextView) findViewById(R.id.registrar_silabus_txtTitulo);
-        txtSubtitulo = (TextView) findViewById(R.id.registrar_silabus_txtSubtitulo);
+        toolbar = (Toolbar) findViewById(R.id.registrar_silabus_toolbar);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -38,14 +40,28 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         idCurso = bundle.getString("id_curso");
+        setSupportActionBar(toolbar);
 
-        txtTitulo.setText(bundle.getString("nombre_curso"));
 
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setCustomView(R.layout.action_bar_title_layout);
+        ((TextView) findViewById(R.id.action_bar_titulo)).setText(bundle.getString("nombre_curso"));
+
+        getSupportActionBar().setTitle("");
         String subtitulo = "";
         if(bundle.getString("eap_curso").equals("SS")) subtitulo = subtitulo + "Sistemas - ";
         else subtitulo = subtitulo + "Software - ";
         subtitulo = subtitulo + "Ciclo " + bundle.getInt("ciclo_curso");
-        txtSubtitulo.setText(subtitulo);
+        ((TextView) findViewById(R.id.action_bar_subtitulo)).setText(subtitulo);
+//        getSupportActionBar().setSubtitle(subtitulo);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
         btnSiguiente.setOnClickListener(new View.OnClickListener() {

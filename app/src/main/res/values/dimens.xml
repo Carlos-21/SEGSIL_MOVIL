@@ -9,4 +9,5 @@
     <dimen name="texto_muy_chico">10sp</dimen>
     <dimen name="layout_margin5dp">5dp</dimen>
     <dimen name="layout_margin10dp">10dp</dimen>
+    <dimen name="margin5dp">5dp</dimen>
 </resources>
