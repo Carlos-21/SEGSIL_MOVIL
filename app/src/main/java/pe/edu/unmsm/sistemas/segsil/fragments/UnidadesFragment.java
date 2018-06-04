@@ -37,6 +37,7 @@ import pe.edu.unmsm.sistemas.segsil.pojos.Unidad;
 public class UnidadesFragment extends Fragment {
 
     String idCurso;
+    int numGrupos;
     Context context;
     FirestoreRecyclerAdapter adapter;
     RecyclerView recyclerView;
@@ -47,8 +48,9 @@ public class UnidadesFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public UnidadesFragment(String idCurso, Context context) {
+    public UnidadesFragment(String idCurso, int numGrupos, Context context) {
         this.idCurso = idCurso;
+        this.numGrupos = numGrupos;
         this.context = context;
     }
 
