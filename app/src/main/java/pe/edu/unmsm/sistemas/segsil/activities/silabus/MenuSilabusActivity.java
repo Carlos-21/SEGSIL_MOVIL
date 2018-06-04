@@ -41,6 +41,7 @@ public class MenuSilabusActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String TAG = "FIRESTORE";
     Toolbar myToolbar;
+    String idCoordinador;
     FirestoreRecyclerAdapter adapter;
     FirestoreRecyclerOptions<Curso> opciones;
 
@@ -58,6 +59,7 @@ public class MenuSilabusActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         txtCoordinador.setText("Coordinador: "+ bundle.getString("nombre") + " " + bundle.getString("apellido"));
+        idCoordinador = bundle.getString("id");
 
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("REGISTRAR SILABUS");
@@ -69,7 +71,7 @@ public class MenuSilabusActivity extends AppCompatActivity {
         });
 
 
-        Query query = db.collection("cursos");
+        Query query = db.collection("cursos").whereEqualTo("idCoordinador",idCoordinador);
         query.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -100,6 +102,7 @@ public class MenuSilabusActivity extends AppCompatActivity {
                         intent.putExtra("eap_curso",c.getEap());
                         intent.putExtra("ciclo_curso",c.getCiclo());
                         intent.putExtra("id_curso",c.getId());
+                        intent.putExtra("grupos",c.getNumGrupos());
                         startActivity(intent);
                     }
                 });

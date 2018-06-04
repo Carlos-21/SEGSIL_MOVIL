@@ -4,20 +4,24 @@ public class Curso {
     private String id;
     private String eap;
     private int ciclo;
+    private int numGrupos;
     private String nombreCurso;
     private String nombrePlan1;
     private String nombrePlan2;
     private String idCoordinador;
+    private String nombreCoordinador;
     private boolean silabus;
 
-    public Curso(String id, String eap, int ciclo, String nombreCurso, String nombrePlan1, String nombrePlan2, String idCoordinador, boolean silabus) {
+    public Curso(String id, String eap, int ciclo, int numGrupos, String nombreCurso, String nombrePlan1, String nombrePlan2, String idCoordinador, String nombreCoordinador, boolean silabus) {
         this.id = id;
         this.eap = eap;
         this.ciclo = ciclo;
+        this.numGrupos = numGrupos;
         this.nombreCurso = nombreCurso;
         this.nombrePlan1 = nombrePlan1;
         this.nombrePlan2 = nombrePlan2;
         this.idCoordinador = idCoordinador;
+        this.nombreCoordinador = nombreCoordinador;
         this.silabus = silabus;
     }
 
@@ -86,6 +90,22 @@ public class Curso {
 
     public void setSilabus(boolean silabus) {
         this.silabus = silabus;
+    }
+
+    public String getNombreCoordinador() {
+        return nombreCoordinador;
+    }
+
+    public void setNombreCoordinador(String nombreCoordinador) {
+        this.nombreCoordinador = nombreCoordinador;
+    }
+
+    public int getNumGrupos() {
+        return numGrupos;
+    }
+
+    public void setNumGrupos(int numGrupos) {
+        this.numGrupos = numGrupos;
     }
 }
 

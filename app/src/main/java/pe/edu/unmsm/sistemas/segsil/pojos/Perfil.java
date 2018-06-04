@@ -9,6 +9,7 @@ public class Perfil {
     private boolean profesor;
     private boolean delegado;
 
+
     public Perfil(boolean administrador, boolean decanato, boolean director_sw, boolean director_ss, boolean coordinador, boolean profesor, boolean delegado) {
         this.administrador = administrador;
         this.decanato = decanato;

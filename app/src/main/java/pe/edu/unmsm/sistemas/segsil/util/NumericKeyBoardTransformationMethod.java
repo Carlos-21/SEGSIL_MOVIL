@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil;
+package pe.edu.unmsm.sistemas.segsil.util;
 
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;

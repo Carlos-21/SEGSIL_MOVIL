@@ -42,7 +42,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/colorIcons"
-                    android:textSize="@dimen/texto_medio"
+                    android:textSize="@dimen/texto_chico"
                     />
             </LinearLayout>
             <LinearLayout

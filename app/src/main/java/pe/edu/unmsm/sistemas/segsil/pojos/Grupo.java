@@ -2,33 +2,35 @@ package pe.edu.unmsm.sistemas.segsil.pojos;
 
 public class Grupo {
     private String id;
-    private int numero;
     private String eap;
-    private String codCurso;
-    private String nombre1;
-    private String nombre2;
+    private int numero;
     private String tipo;
-    private String codProfesor;
-    private String nomProfesor;
+    private String nombrePlan1;
+    private String nombrePlan2;
     private String codCoordinador;
     private String nomCoordinador;
+    private String codProfesor;
+    private String nomProfesor;
     private String codDelegado;
     private String nomDelegado;
+    private String codCurso;
+    private int ciclo;
 
-    public Grupo(String id, int numero, String eap, String codCurso, String nombre1, String nombre2, String tipo, String codProfesor, String nomProfesor, String codCoordinador, String nomCoordinador, String codDelegado, String nomDelegado) {
+    public Grupo(String id, String eap, int numero, String tipo, String nombrePlan1, String nombrePlan2, String codCoordinador, String nomCoordinador, String codProfesor, String nomProfesor, String codDelegado, String nomDelegado, String codCurso, int ciclo) {
         this.id = id;
-        this.numero = numero;
         this.eap = eap;
-        this.codCurso = codCurso;
-        this.nombre1 = nombre1;
-        this.nombre2 = nombre2;
+        this.numero = numero;
         this.tipo = tipo;
-        this.codProfesor = codProfesor;
-        this.nomProfesor = nomProfesor;
+        this.nombrePlan1 = nombrePlan1;
+        this.nombrePlan2 = nombrePlan2;
         this.codCoordinador = codCoordinador;
         this.nomCoordinador = nomCoordinador;
+        this.codProfesor = codProfesor;
+        this.nomProfesor = nomProfesor;
         this.codDelegado = codDelegado;
         this.nomDelegado = nomDelegado;
+        this.codCurso = codCurso;
+        this.ciclo = ciclo;
     }
 
     public Grupo() {
@@ -122,19 +124,27 @@ public class Grupo {
         this.nomDelegado = nomDelegado;
     }
 
-    public String getNombre1() {
-        return nombre1;
+    public String getNombrePlan1() {
+        return nombrePlan1;
     }
 
-    public void setNombre1(String nombre1) {
-        this.nombre1 = nombre1;
+    public void setNombrePlan1(String nombrePlan1) {
+        this.nombrePlan1 = nombrePlan1;
     }
 
-    public String getNombre2() {
-        return nombre2;
+    public String getNombrePlan2() {
+        return nombrePlan2;
     }
 
-    public void setNombre2(String nombre2) {
-        this.nombre2 = nombre2;
+    public void setNombrePlan2(String nombrePlan2) {
+        this.nombrePlan2 = nombrePlan2;
+    }
+
+    public int getCiclo() {
+        return ciclo;
+    }
+
+    public void setCiclo(int ciclo) {
+        this.ciclo = ciclo;
     }
 }

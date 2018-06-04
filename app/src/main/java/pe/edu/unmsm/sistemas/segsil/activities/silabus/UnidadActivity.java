@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -22,7 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.edu.unmsm.sistemas.segsil.NumericKeyBoardTransformationMethod;
+import pe.edu.unmsm.sistemas.segsil.util.NumericKeyBoardTransformationMethod;
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.pojos.Semana;
 import pe.edu.unmsm.sistemas.segsil.pojos.Silabus;
@@ -61,7 +58,7 @@ public class UnidadActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseFirestore.getInstance().collection("silabus").document(idCurso).set(new Silabus(idCurso));
+                FirebaseFirestore.getInstance().collection("silabus").document(idCurso).set(new Silabus(idCurso,""));
                 FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
                         .collection("unidades").document(numero+"")
                         .set(new Unidad(numero,edtNombre.getText().toString(),Integer.parseInt(edtSemanas.getText().toString())));

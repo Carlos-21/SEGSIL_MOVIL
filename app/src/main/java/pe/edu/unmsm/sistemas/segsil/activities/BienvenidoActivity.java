@@ -37,6 +37,7 @@ public class BienvenidoActivity extends AppCompatActivity {
     private TextView txtCargando;
     private String nombre;
     private String apellido;
+    private FirebaseUser currentUser;
 
 
 
@@ -62,7 +63,8 @@ public class BienvenidoActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
+
         updateUI(currentUser);
 
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
@@ -75,37 +77,53 @@ public class BienvenidoActivity extends AppCompatActivity {
         cvGestionarUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BienvenidoActivity.this, AdminActivity.class);
-                intent.putExtra("nombre",nombre);
-                intent.putExtra("apellido",apellido);
-                startActivity(intent);
+                if(currentUser != null){
+                    String idUsuario = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
+                    Intent intent = new Intent(BienvenidoActivity.this, AdminActivity.class);
+                    intent.putExtra("id",idUsuario);
+                    intent.putExtra("nombre",nombre);
+                    intent.putExtra("apellido",apellido);
+                    startActivity(intent);
+                }
             }
         });
         cvRegistrarSilabus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BienvenidoActivity.this, MenuSilabusActivity.class);
-                intent.putExtra("nombre",nombre);
-                intent.putExtra("apellido",apellido);
-                startActivity(intent);
+                if(currentUser != null){
+                    String idUsuario = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
+                    Intent intent = new Intent(BienvenidoActivity.this, MenuSilabusActivity.class);
+                    intent.putExtra("id",idUsuario);
+                    intent.putExtra("nombre",nombre);
+                    intent.putExtra("apellido",apellido);
+                    startActivity(intent);
+                }
             }
         });
         cvRegistrarAvance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BienvenidoActivity.this, MenuAvanceActivity.class);
-                intent.putExtra("nombre",nombre);
-                intent.putExtra("apellido",apellido);
-                startActivity(intent);
+                if(currentUser != null) {
+                    String idUsuario = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
+                    Intent intent = new Intent(BienvenidoActivity.this, MenuAvanceActivity.class);
+                    intent.putExtra("id",idUsuario);
+                    intent.putExtra("nombre", nombre);
+                    intent.putExtra("apellido", apellido);
+                    startActivity(intent);
+                }
             }
         });
         cvControlarAvance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BienvenidoActivity.this, MenuControlActivity.class);
-                intent.putExtra("nombre",nombre);
-                intent.putExtra("apellido",apellido);
-                startActivity(intent);
+                if(currentUser != null) {
+                    String idUsuario = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
+                    Intent intent = new Intent(BienvenidoActivity.this, MenuControlActivity.class);
+                    intent.putExtra("id",idUsuario);
+                    intent.putExtra("nombre", nombre);
+                    intent.putExtra("apellido", apellido);
+                    startActivity(intent);
+                }
             }
         });
     }
