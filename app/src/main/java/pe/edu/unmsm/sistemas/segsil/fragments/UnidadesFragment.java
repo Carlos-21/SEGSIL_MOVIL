@@ -98,6 +98,7 @@ public class UnidadesFragment extends Fragment {
                 Intent intent =  new Intent(context, UnidadActivity.class);
                 intent.putExtra("numero", adapter.getItemCount() + 1);
                 intent.putExtra("curso", idCurso);
+                intent.putExtra("grupos", numGrupos);
                 startActivity(intent);
             }
         });

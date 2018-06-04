@@ -5,5 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.admin.AdminActivity">
-
+    <Button
+        android:id="@+id/admin_btnCargaData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CARGAR DATA"/>
 </android.support.constraint.ConstraintLayout>

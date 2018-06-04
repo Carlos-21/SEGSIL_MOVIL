@@ -32,6 +32,7 @@ public class UnidadActivity extends AppCompatActivity {
     TextInputEditText edtSemanas;
     Button btnRegistrar;
     String idCurso;
+    int numeroGrupos;
     final String TAG = "FIRESTORE";
     int numero;
 
@@ -43,7 +44,7 @@ public class UnidadActivity extends AppCompatActivity {
 
         idCurso = getIntent().getExtras().getString("curso");
         numero = getIntent().getExtras().getInt("numero");
-
+        numeroGrupos = getIntent().getExtras().getInt("grupos");
 
         txtNumero = (TextView) findViewById(R.id.registrar_unidad_txtNumero);
         edtNombre = (TextInputEditText) findViewById(R.id.registrar_unidad_edtNombre);
@@ -58,33 +59,36 @@ public class UnidadActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseFirestore.getInstance().collection("silabus").document(idCurso).set(new Silabus(idCurso,""));
-                FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
-                        .collection("unidades").document(numero+"")
-                        .set(new Unidad(numero,edtNombre.getText().toString(),Integer.parseInt(edtSemanas.getText().toString())));
-                FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    List<Semana> semanas = new ArrayList<>();
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                        semanas.add(document.toObject(Semana.class));
-                                    }
-                                    int num = Integer.parseInt(edtSemanas.getText().toString());
-                                    for (int i = 1; i <= num; i++) {
-                                        int n = semanas.size() + i;
-                                        FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
-                                                .collection("semanas").document(n +"").set(new Semana(n,numero,false));
-                                    }
+                for (int i = 1; i <= numeroGrupos; i++) {
+                    String idGrupo = idCurso + i;
+                    FirebaseFirestore.getInstance().collection("silabus").document(idGrupo).set(new Silabus(idGrupo,idCurso));
+                    FirebaseFirestore.getInstance().collection("silabus").document(idGrupo)
+                            .collection("unidades").document(numero+"")
+                            .set(new Unidad(numero,edtNombre.getText().toString(),Integer.parseInt(edtSemanas.getText().toString())));
+                    FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        List<Semana> semanas = new ArrayList<>();
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Log.d(TAG, document.getId() + " => " + document.getData());
+                                            semanas.add(document.toObject(Semana.class));
+                                        }
+                                        int num = Integer.parseInt(edtSemanas.getText().toString());
+                                        for (int i = 1; i <= num; i++) {
+                                            int n = semanas.size() + i;
+                                            FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
+                                                    .collection("semanas").document(n +"").set(new Semana(n,numero,false));
+                                        }
 
-                                } else {
-                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
                 finish();
             }
         });

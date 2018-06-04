@@ -16,6 +16,9 @@ public class Usuario {
         this.perfil = perfil;
     }
 
+    public Usuario() {
+    }
+
     public String getId() {
         return id;
     }
