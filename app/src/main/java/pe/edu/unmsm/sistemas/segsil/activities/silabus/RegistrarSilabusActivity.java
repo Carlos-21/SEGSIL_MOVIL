@@ -24,6 +24,7 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
     String idCurso;
+    int numeroGrupos;
     int fragmentActual = 1;
 
 
@@ -42,6 +43,7 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         idCurso = bundle.getString("id_curso");
+        numeroGrupos =  bundle.getInt("grupos");
         setSupportActionBar(toolbar);
 
 
