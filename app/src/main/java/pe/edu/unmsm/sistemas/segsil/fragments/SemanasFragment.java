@@ -16,14 +16,23 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import pe.edu.unmsm.sistemas.segsil.R;
+import pe.edu.unmsm.sistemas.segsil.activities.silabus.TemaActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.silabus.UnidadActivity;
 import pe.edu.unmsm.sistemas.segsil.holders.SemanaHolder;
 import pe.edu.unmsm.sistemas.segsil.holders.UnidadHolder;
 import pe.edu.unmsm.sistemas.segsil.pojos.Semana;
+import pe.edu.unmsm.sistemas.segsil.pojos.Tema;
 import pe.edu.unmsm.sistemas.segsil.pojos.Unidad;
 
 
@@ -33,7 +42,6 @@ import pe.edu.unmsm.sistemas.segsil.pojos.Unidad;
 public class SemanasFragment extends Fragment {
 
     String idCurso;
-    int numGrupos;
     Context context;
     RecyclerView recyclerView;
     FirestoreRecyclerAdapter adapter;
@@ -43,9 +51,8 @@ public class SemanasFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public SemanasFragment(String idCurso, int numGrupos, Context context) {
+    public SemanasFragment(String idCurso, Context context) {
         this.idCurso = idCurso;
-        this.numGrupos = numGrupos;
         this.context = context;
     }
 
@@ -61,16 +68,41 @@ public class SemanasFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Query query = FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas");
+        Query query = FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas").orderBy("numero");
 
         FirestoreRecyclerOptions<Semana> options = new FirestoreRecyclerOptions.Builder<Semana>()
                 .setQuery(query, Semana.class).build();
 
         adapter = new FirestoreRecyclerAdapter<Semana, SemanaHolder>(options) {
             @Override
-            public void onBindViewHolder(SemanaHolder holder, int position, Semana model) {
+            public void onBindViewHolder(final SemanaHolder holder, int position, final Semana model) {
                 holder.setTxtNumero("Semana " + model.getNumero());
-                holder.setTxtUnidad("Unidad" + model.getUnidad());
+                holder.setTxtUnidad("Unidad " + model.getUnidad());
+                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
+                        .collection("semanas").document(model.getNumero()+"").collection("temas").document("1");
+                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                holder.setImgLleno(true);
+                            }else{
+                                holder.setImgLleno(false);
+                            }
+                        }
+                    }
+                });
+                holder.getCv().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, TemaActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("curso", idCurso);
+                        intent.putExtra("semana", model.getNumero());
+                        context.startActivity(intent);
+                    }
+                });
             }
 
             @Override
@@ -84,8 +116,6 @@ public class SemanasFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-
     }
 
     @Override

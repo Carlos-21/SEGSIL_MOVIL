@@ -102,7 +102,6 @@ public class MenuSilabusActivity extends AppCompatActivity {
                         intent.putExtra("eap_curso",c.getEap());
                         intent.putExtra("ciclo_curso",c.getCiclo());
                         intent.putExtra("id_curso",c.getId());
-                        intent.putExtra("grupos",c.getNumGrupos());
                         startActivity(intent);
                     }
                 });

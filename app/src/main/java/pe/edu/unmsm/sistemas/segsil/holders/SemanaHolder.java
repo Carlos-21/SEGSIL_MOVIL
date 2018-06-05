@@ -1,6 +1,7 @@
 package pe.edu.unmsm.sistemas.segsil.holders;
 
 import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -32,7 +33,8 @@ public class SemanaHolder extends RecyclerView.ViewHolder{
     }
 
     public void setImgLleno(boolean b) {
-        if(b) imgLleno.setColorFilter(Color.argb(255, 1, 1, 255));
+        if(b) imgLleno.setColorFilter(Color.argb(255, 1, 1, 200));
+        else imgLleno.setColorFilter(Color.argb(255, 1, 1, 1));
     }
 
     public CardView getCv() {

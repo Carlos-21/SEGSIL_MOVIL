@@ -18,7 +18,6 @@ import pe.edu.unmsm.sistemas.segsil.R;
 public class ResumenFragment extends Fragment {
 
     String idCurso;
-    int numGrupos;
     Context context;
 
     public ResumenFragment() {
@@ -26,9 +25,8 @@ public class ResumenFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public ResumenFragment(String idCurso, int numGrupos, Context context) {
+    public ResumenFragment(String idCurso, Context context) {
         this.idCurso = idCurso;
-        this.numGrupos = numGrupos;
         this.context = context;
     }
 

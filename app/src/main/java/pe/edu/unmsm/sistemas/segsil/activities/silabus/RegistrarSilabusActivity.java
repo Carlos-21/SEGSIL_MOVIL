@@ -24,7 +24,6 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
     String idCurso;
-    int numeroGrupos;
     int fragmentActual = 1;
 
 
@@ -43,7 +42,6 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         idCurso = bundle.getString("id_curso");
-        numeroGrupos =  bundle.getInt("grupos");
         setSupportActionBar(toolbar);
 
 
@@ -90,6 +88,7 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
     }
 
     public void setFragment(int numeroFragment, int direccion){
+
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
         if(direccion > 0){
@@ -101,21 +100,21 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
             case 1:
                 btnAnterior.setVisibility(View.GONE);
                 btnSiguiente.setVisibility(View.VISIBLE);
-                UnidadesFragment unidadesFragment =  new UnidadesFragment(idCurso,numeroGrupos,RegistrarSilabusActivity.this);
+                UnidadesFragment unidadesFragment =  new UnidadesFragment(idCurso,RegistrarSilabusActivity.this);
                 fragmentTransaction.replace(R.id.registrar_silabus_fragment,unidadesFragment);
                 break;
             case 2:
                 btnSiguiente.setText("Siguiente");
                 btnAnterior.setVisibility(View.VISIBLE);
                 btnSiguiente.setVisibility(View.VISIBLE);
-                SemanasFragment semanasFragment =  new SemanasFragment(idCurso,numeroGrupos,RegistrarSilabusActivity.this);
-                fragmentTransaction.replace(R.id.registrar_silabus_fragment,semanasFragment);
+                SemanasFragment semanasFragment =  new SemanasFragment(idCurso,RegistrarSilabusActivity.this);
+                fragmentTransaction.replace(R.id.registrar_silabus_fragment, semanasFragment);
                 break;
             case 3:
                 btnSiguiente.setText("Finalizar");
                 btnAnterior.setVisibility(View.VISIBLE);
                 btnSiguiente.setVisibility(View.VISIBLE);
-                ResumenFragment resumenFragment =  new ResumenFragment(idCurso,numeroGrupos,RegistrarSilabusActivity.this);
+                ResumenFragment resumenFragment =  new ResumenFragment(idCurso,RegistrarSilabusActivity.this);
                 fragmentTransaction.replace(R.id.registrar_silabus_fragment,resumenFragment);
                 break;
         }

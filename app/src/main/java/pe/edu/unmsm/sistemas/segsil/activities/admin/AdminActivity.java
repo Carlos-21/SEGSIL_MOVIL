@@ -1,13 +1,17 @@
 package pe.edu.unmsm.sistemas.segsil.activities.admin;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import pe.edu.unmsm.sistemas.segsil.R;
+import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.silabus.MenuSilabusActivity;
 import pe.edu.unmsm.sistemas.segsil.pojos.Curso;
 import pe.edu.unmsm.sistemas.segsil.pojos.Grupo;
 import pe.edu.unmsm.sistemas.segsil.pojos.Perfil;
@@ -19,12 +23,15 @@ public class AdminActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
     Button btnCargaData;
+    Button btnCerrarSesion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
         btnCargaData =  (Button) findViewById(R.id.admin_btnCargaData);
+        btnCerrarSesion = (Button) findViewById(R.id.admin_btnCerrarSesion);
 
         btnCargaData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +40,17 @@ public class AdminActivity extends AppCompatActivity {
                 cargaUsuarios();
                 cargaCursos();
                 cargarGrupos();
+            }
+        });
+
+        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
+                Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -70,13 +88,13 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     public void cargaCursos(){
-        db.collection("cursos").document("sscompinf").set(new Curso("sscompinf","SS",1,1,"INTRODUCCIÓN A LA  COMPUTACION","(2014)INTRODUCCIÓN A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO",false));
-        db.collection("cursos").document("ssteosis").set(new Curso("ssteosis","SS",1,1,"TEORIA DE SISTEMAS","(2014)TEORIA DE SISTEMAS","(2009)TEORÍA GENERAL DE SISTEMAS","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO",false));
-        db.collection("cursos").document("sscomdin").set(new Curso("sscomdin","SS",1,1,"COMUNICACIÓN Y DINÁMICA DE GRUPO","(2014)COMUNICACIÓN Y DINÁMICA DE GRUPO","(2009)TALLER DE TÉCNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER",false));
-        db.collection("cursos").document("ssestapinv").set(new Curso("ssestapinv","SS",1,1,"ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","(2014) ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","","rsolis","SOLIS NARRO ROLANDO",false));
-        db.collection("cursos").document("sscalc1").set(new Curso("sscalc1","SS",1,1,"CÁLCULO I","(2014)CÁLCULO I","(2009)CÁLCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER",false));
-        db.collection("cursos").document("ssmatbas1").set(new Curso("ssmatbas1","SS",1,1,"MATEMÁTICA BÁSICA I","(2014)MATEMÁTICA BÁSICA I","(2009)MATEMÁTICA BÁSICA I" ,"lcachi","CACHI MONTOYA LUIS",false));
-        db.collection("cursos").document("sseticpro").set(new Curso("sseticpro","SS",1,1,"ÉTICA DE LA PROFESIÓN","(2014) ÉTICA DE LA PROFESIÓN","","cmora","CARLOS ABEL MORA ZAVALA",false));
+        db.collection("cursos").document("sscompinf").set(new Curso("sscompinf","SS",1,"INTRODUCCIÓN A LA  COMPUTACION","(2014)INTRODUCCIÓN A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO",false));
+        db.collection("cursos").document("ssteosis").set(new Curso("ssteosis","SS",1,"TEORIA DE SISTEMAS","(2014)TEORIA DE SISTEMAS","(2009)TEORÍA GENERAL DE SISTEMAS","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO",false));
+        db.collection("cursos").document("sscomdin").set(new Curso("sscomdin","SS",1,"COMUNICACIÓN Y DINÁMICA DE GRUPO","(2014)COMUNICACIÓN Y DINÁMICA DE GRUPO","(2009)TALLER DE TÉCNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER",false));
+        db.collection("cursos").document("ssestapinv").set(new Curso("ssestapinv","SS",1,"ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","(2014) ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","","rsolis","SOLIS NARRO ROLANDO",false));
+        db.collection("cursos").document("sscalc1").set(new Curso("sscalc1","SS",1,"CÁLCULO I","(2014)CÁLCULO I","(2009)CÁLCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER",false));
+        db.collection("cursos").document("ssmatbas1").set(new Curso("ssmatbas1","SS",1,"MATEMÁTICA BÁSICA I","(2014)MATEMÁTICA BÁSICA I","(2009)MATEMÁTICA BÁSICA I" ,"lcachi","CACHI MONTOYA LUIS",false));
+        db.collection("cursos").document("sseticpro").set(new Curso("sseticpro","SS",1,"ÉTICA DE LA PROFESIÓN","(2014) ÉTICA DE LA PROFESIÓN","","cmora","CARLOS ABEL MORA ZAVALA",false));
     }
 
 
@@ -114,4 +132,7 @@ public class AdminActivity extends AppCompatActivity {
         db.collection("grupos").document("sseticpro1").
                 set(new Grupo("sseticpro1","SS",1,"P","sseticpro",1,"(2014) ÉTICA DE LA PROFESIÓN","" ,"cmora","CARLOS ABEL MORA ZAVALA","cmora","CARLOS ABEL MORA ZAVALA","dmorales","DENIS MORALES RETAMOZO"));
     }
+
+
+
 }

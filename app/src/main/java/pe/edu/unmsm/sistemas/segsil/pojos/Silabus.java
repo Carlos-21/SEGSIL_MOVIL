@@ -2,21 +2,19 @@ package pe.edu.unmsm.sistemas.segsil.pojos;
 
 public class Silabus {
     private String id;
-    private String curso;
 
-    public Silabus(String id, String curso) {
+    public Silabus(String id) {
         this.id = id;
-        this.curso = curso;
     }
 
     public Silabus() {
     }
 
-    public String getCurso() {
-        return curso;
+    public String getId() {
+        return id;
     }
 
-    public void setCurso(String curso) {
-        this.curso = curso;
+    public void setId(String id) {
+        this.id = id;
     }
 }

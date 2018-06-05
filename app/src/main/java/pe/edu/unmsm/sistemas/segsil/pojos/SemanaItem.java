@@ -1,15 +1,17 @@
 package pe.edu.unmsm.sistemas.segsil.pojos;
 
-public class Semana {
+public class SemanaItem {
     private int numero;
     private int unidad;
+    private String temas;
 
-    public Semana(int numero, int unidad) {
+    public SemanaItem(int numero, int unidad, String temas) {
         this.numero = numero;
         this.unidad = unidad;
+        this.temas = temas;
     }
 
-    public Semana() {
+    public SemanaItem() {
     }
 
     public int getNumero() {
@@ -28,4 +30,11 @@ public class Semana {
         this.unidad = unidad;
     }
 
+    public String getTemas() {
+        return temas;
+    }
+
+    public void setTemas(String temas) {
+        this.temas = temas;
+    }
 }
