@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,12 +29,13 @@ import pe.edu.unmsm.sistemas.segsil.pojos.Usuario;
 
 public class BienvenidoActivity extends AppCompatActivity {
 
-    private Button btnCerrarSesion;
+    private ImageView btnCerrarSesion;
     private CardView cvGestionarUsuarios;
     private CardView cvRegistrarSilabus;
     private CardView cvRegistrarAvance;
     private CardView cvControlarAvance;
     private TextView txtNombreUsuario;
+    private TextView txtIdUsuario;
     private TextView txtCargando;
     private String nombre;
     private String apellido;
@@ -51,8 +53,9 @@ public class BienvenidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bienvenido);
 
-        btnCerrarSesion = (Button) findViewById(R.id.bienvenido_btnCerrarSesion);
+        btnCerrarSesion = (ImageView) findViewById(R.id.bienvenido_btnCerrarSesion);
         txtNombreUsuario = (TextView) findViewById(R.id.bienvenido_txtNombreUsuario);
+        txtIdUsuario = (TextView) findViewById(R.id.bienvenido_txtIdUsuario);
         txtCargando = (TextView) findViewById(R.id.bienvenido_txtCargando);
 
         cvControlarAvance = (CardView) findViewById(R.id.bienvenido_cvControlAvance);
@@ -130,7 +133,7 @@ public class BienvenidoActivity extends AppCompatActivity {
 
     public void updateUI(FirebaseUser user){
         if(user != null){
-            String idUsuario = user.getEmail().substring(0,user.getEmail().indexOf("@"));
+            final String idUsuario = user.getEmail().substring(0,user.getEmail().indexOf("@"));
 
             DocumentReference docRef1 = db.collection("personas").document(idUsuario);
             docRef1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -139,7 +142,8 @@ public class BienvenidoActivity extends AppCompatActivity {
                     Persona persona = documentSnapshot.toObject(Persona.class);
                     nombre = persona.getNombres();
                     apellido = persona.getApellidos();
-                    txtNombreUsuario.setText(nombre + " " + apellido);
+                    txtIdUsuario.setText(idUsuario);
+                    txtNombreUsuario.setText("Bienvenido, " + (nombre + " " + apellido).toUpperCase());
                 }
             });
 

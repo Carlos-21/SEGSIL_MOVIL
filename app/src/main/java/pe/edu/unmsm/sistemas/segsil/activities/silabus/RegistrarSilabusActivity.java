@@ -1,7 +1,10 @@
 package pe.edu.unmsm.sistemas.segsil.activities.silabus;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import pe.edu.unmsm.sistemas.segsil.R;
+import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
 import pe.edu.unmsm.sistemas.segsil.fragments.ResumenFragment;
 import pe.edu.unmsm.sistemas.segsil.fragments.SemanasFragment;
 import pe.edu.unmsm.sistemas.segsil.fragments.UnidadesFragment;
@@ -63,6 +67,17 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(RegistrarSilabusActivity.this);
+                builder.setMessage("¿DESEA SALIR DEL PROCESO DE REGISTRO DE SILABUS?");
+                builder.setNegativeButton("NO", null);
+                builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 onBackPressed();
             }
         });

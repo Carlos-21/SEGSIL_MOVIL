@@ -3,16 +3,20 @@ package pe.edu.unmsm.sistemas.segsil.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import pe.edu.unmsm.sistemas.segsil.R;
+import pe.edu.unmsm.sistemas.segsil.activities.BienvenidoActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
 import pe.edu.unmsm.sistemas.segsil.pojos.Semana;
 import pe.edu.unmsm.sistemas.segsil.pojos.Tema;
 import pe.edu.unmsm.sistemas.segsil.pojos.Unidad;
@@ -47,6 +53,8 @@ public class ResumenFragment extends Fragment {
     TextView txtTemasSemana1, txtTemasSemana2, txtTemasSemana3, txtTemasSemana4, txtTemasSemana5, txtTemasSemana6, txtTemasSemana7,
             txtTemasSemana9, txtTemasSemana10, txtTemasSemana11, txtTemasSemana12, txtTemasSemana13, txtTemasSemana14, txtTemasSemana15;
     String TAG = "FIRESTORE";
+
+    Button btnFinalizar;
 
     TextView[] textViewSemanas;
     TextView[] textViewTemas;
@@ -110,8 +118,8 @@ public class ResumenFragment extends Fragment {
         txtTemasSemana13 = semana1.findViewById(R.id.item_resumen_txtTemas);
         txtTemasSemana14 = semana1.findViewById(R.id.item_resumen_txtTemas);
         txtTemasSemana15 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        textViewTemas =  new TextView[]{txtTemasSemana1, txtTemasSemana2, txtTemasSemana3, txtTemasSemana4, txtTemasSemana5, txtTemasSemana6, txtTemasSemana7, txtTemasSemana9, txtTemasSemana10, txtTemasSemana11, txtTemasSemana12, txtTemasSemana13, txtTemasSemana14, txtTemasSemana15
-        };
+        textViewTemas =  new TextView[]{txtTemasSemana1, txtTemasSemana2, txtTemasSemana3, txtTemasSemana4, txtTemasSemana5, txtTemasSemana6, txtTemasSemana7, txtTemasSemana9, txtTemasSemana10, txtTemasSemana11, txtTemasSemana12, txtTemasSemana13, txtTemasSemana14, txtTemasSemana15};
+        btnFinalizar = (Button) rootView.findViewById(R.id.resumen_fragment_btnFinalizar);
         return rootView;
     }
 
@@ -166,6 +174,23 @@ public class ResumenFragment extends Fragment {
                         }
                     });
         }
+
+        btnFinalizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("¿CONFIRMA EL LLENADO COMPLETO DEL SILABUS?");
+                builder.setNegativeButton("NO", null);
+                builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getActivity().finish();
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
     }
 }
