@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:src="@drawable/baseline_done_all_black_48"
+            android:tint="@color/colorDivider"
             />
     </LinearLayout>
 </android.support.v7.widget.CardView>

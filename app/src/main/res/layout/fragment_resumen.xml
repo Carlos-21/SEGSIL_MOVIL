@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:padding="@dimen/margin_material"
     tools:context=".fragments.ResumenFragment">
     <TextView
         android:layout_width="match_parent"
@@ -14,9 +14,33 @@
         android:textSize="@dimen/texto_medio"
         android:textColor="@color/colorPrimaryDark"
         android:gravity="center"/>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8">
-    </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana1"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana2"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana3"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana4"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana5"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana6"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana7"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana9"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana10"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana11"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana12"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana13"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana14"/>
+            <include layout="@layout/item_resumen" android:id="@+id/item_resumen_semana15"/>
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="finalizar"
+        android:theme="@style/RaisedButtonDark"/>
 </LinearLayout>

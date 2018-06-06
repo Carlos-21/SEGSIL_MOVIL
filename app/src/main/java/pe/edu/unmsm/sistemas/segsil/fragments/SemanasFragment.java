@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import pe.edu.unmsm.sistemas.segsil.activities.silabus.TemaActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.silabus.UnidadActivity;
 import pe.edu.unmsm.sistemas.segsil.holders.SemanaHolder;
 import pe.edu.unmsm.sistemas.segsil.holders.UnidadHolder;
+import pe.edu.unmsm.sistemas.segsil.pojos.Curso;
 import pe.edu.unmsm.sistemas.segsil.pojos.Semana;
 import pe.edu.unmsm.sistemas.segsil.pojos.Tema;
 import pe.edu.unmsm.sistemas.segsil.pojos.Unidad;
@@ -42,19 +44,23 @@ import pe.edu.unmsm.sistemas.segsil.pojos.Unidad;
 public class SemanasFragment extends Fragment {
 
     String idCurso;
+    String nombreCurso;
     Context context;
     RecyclerView recyclerView;
     FirestoreRecyclerAdapter adapter;
+    String TAG = "FIRESTORE";
 
     public SemanasFragment() {
         // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
-    public SemanasFragment(String idCurso, Context context) {
+    public SemanasFragment(String idCurso, String nombreCurso, Context context) {
         this.idCurso = idCurso;
+        this.nombreCurso = nombreCurso;
         this.context = context;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +74,7 @@ public class SemanasFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Query query = FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas").orderBy("numero");
 
         FirestoreRecyclerOptions<Semana> options = new FirestoreRecyclerOptions.Builder<Semana>()
@@ -78,27 +85,14 @@ public class SemanasFragment extends Fragment {
             public void onBindViewHolder(final SemanaHolder holder, int position, final Semana model) {
                 holder.setTxtNumero("Semana " + model.getNumero());
                 holder.setTxtUnidad("Unidad " + model.getUnidad());
-                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
-                        .collection("semanas").document(model.getNumero()+"").collection("temas").document("1");
-                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                holder.setImgLleno(true);
-                            }else{
-                                holder.setImgLleno(false);
-                            }
-                        }
-                    }
-                });
+                holder.setImgLleno(model.isLlenado());
                 holder.getCv().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, TemaActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("curso", idCurso);
+                        intent.putExtra("nombreCurso", nombreCurso);
                         intent.putExtra("semana", model.getNumero());
                         context.startActivity(intent);
                     }

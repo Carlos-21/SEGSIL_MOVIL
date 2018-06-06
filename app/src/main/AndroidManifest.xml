@@ -29,7 +29,10 @@
         <activity android:name=".activities.control.MenuControlActivity" />
         <activity android:name=".activities.silabus.RegistrarSilabusActivity" />
         <activity android:name=".activities.silabus.UnidadActivity" />
-        <activity android:name=".activities.silabus.TemaActivity"></activity>
+        <activity android:name=".activities.silabus.TemaActivity" />
+        <activity android:name=".activities.silabus.ActividadesActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"></activity>
     </application>
 
 </manifest>

@@ -33,8 +33,8 @@ public class SemanaHolder extends RecyclerView.ViewHolder{
     }
 
     public void setImgLleno(boolean b) {
-        if(b) imgLleno.setColorFilter(Color.argb(255, 1, 1, 200));
-        else imgLleno.setColorFilter(Color.argb(255, 1, 1, 1));
+        if(b) imgLleno.setColorFilter(Color.argb(255, 0,151,167));
+        else imgLleno.setColorFilter(Color.argb(255, 189,189,189));
     }
 
     public CardView getCv() {

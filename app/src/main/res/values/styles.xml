@@ -26,6 +26,15 @@
         <item name="colorControlActivated">@color/colorIcons</item>
     </style>
 
+    <style name="TextInputAccent" parent="AlertDialog.AppCompat.Light">
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
     <style name="RaisedButtonDark" parent="Theme.AppCompat.Light">
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>

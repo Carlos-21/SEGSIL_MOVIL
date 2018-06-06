@@ -3,11 +3,11 @@ package pe.edu.unmsm.sistemas.segsil.pojos;
 import java.util.ArrayList;
 
 public class Tema {
-    private String numero;
+    private int numero;
     private String nombre;
     private ArrayList<String> actividades;
 
-    public Tema(String numero, String nombre, ArrayList<String> actividades) {
+    public Tema(int numero, String nombre, ArrayList<String> actividades) {
         this.numero = numero;
         this.nombre = nombre;
         this.actividades = actividades;
@@ -16,11 +16,11 @@ public class Tema {
     public Tema() {
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 

@@ -24,6 +24,7 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
     String idCurso;
+    String nombreCurso;
     int fragmentActual = 1;
 
 
@@ -42,13 +43,14 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         idCurso = bundle.getString("id_curso");
+        nombreCurso = bundle.getString("nombre_curso");
         setSupportActionBar(toolbar);
 
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setCustomView(R.layout.action_bar_title_layout);
-        ((TextView) findViewById(R.id.action_bar_titulo)).setText(bundle.getString("nombre_curso"));
+        ((TextView) findViewById(R.id.action_bar_titulo)).setText(nombreCurso);
 
         getSupportActionBar().setTitle("");
         String subtitulo = "";
@@ -107,7 +109,7 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
                 btnSiguiente.setText("Siguiente");
                 btnAnterior.setVisibility(View.VISIBLE);
                 btnSiguiente.setVisibility(View.VISIBLE);
-                SemanasFragment semanasFragment =  new SemanasFragment(idCurso,RegistrarSilabusActivity.this);
+                SemanasFragment semanasFragment =  new SemanasFragment(idCurso, nombreCurso,RegistrarSilabusActivity.this);
                 fragmentTransaction.replace(R.id.registrar_silabus_fragment, semanasFragment);
                 break;
             case 3:
