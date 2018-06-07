@@ -77,7 +77,7 @@ public class UnidadActivity extends AppCompatActivity {
                                             int n = semanas.size() + i;
                                             if (n > 7) n++;
                                             FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
-                                                    .collection("semanas").document(n +"").set(new Semana(n,numero,false));
+                                                    .collection("semanas").document(n +"").set(new Semana(n,numero,edtNombre.getText().toString(),false));
                                         }
 
                                     } else {

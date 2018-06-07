@@ -19,17 +19,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.activities.BienvenidoActivity;
@@ -55,9 +61,13 @@ public class ResumenFragment extends Fragment {
     String TAG = "FIRESTORE";
 
     Button btnFinalizar;
+//    TextView txtUnidades;
 
     TextView[] textViewSemanas;
     TextView[] textViewTemas;
+
+
+    boolean completo = true;
 
 
     public ResumenFragment() {
@@ -75,6 +85,7 @@ public class ResumenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_resumen, container, false);
+//        txtUnidades = (TextView) rootView.findViewById(R.id.resumen_fragment_txtUnidades);
         semana1 = rootView.findViewById(R.id.item_resumen_semana1);
         semana2 = rootView.findViewById(R.id.item_resumen_semana2);
         semana3 = rootView.findViewById(R.id.item_resumen_semana3);
@@ -127,6 +138,7 @@ public class ResumenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas").orderBy("numero")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -137,9 +149,11 @@ public class ResumenFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 semanas.add(document.toObject(Semana.class));
+
                             }
                             for (int i = 0; i < semanas.size(); i++) {
-                                textViewSemanas[i].setText("SEMANA " + semanas.get(i).getNumero() + " - " + "UNIDAD " + semanas.get(i).getUnidad());
+                                textViewSemanas[i].setText("SEMANA " + semanas.get(i).getNumero() + " - " + semanas.get(i).getNombreUnidad());
+                                completo = completo && semanas.get(i).isLlenado();
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -147,9 +161,9 @@ public class ResumenFragment extends Fragment {
                     }
                 });
 
-
         for (int i = 0; i < textViewTemas.length ; i++) {
             final TextView textView = textViewTemas[i];
+            textView.setText("");
             final int textViewTema = i;
             int semana = i + 1;
             if (semana > 7) semana++;
@@ -159,15 +173,20 @@ public class ResumenFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
+                                boolean b = false;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                     Tema tema = document.toObject(Tema.class);
-                                    textView.setText(tema.getNombre()+"\n");
+                                    if (!b){
+                                        b = true;
+                                        textView.append(tema.getNombre());
+                                    }else{
+                                        textView.append("\n" + tema.getNombre());
+                                    }
                                     for (String s : tema.getActividades()){
-                                        textView.append(s + ".");
+                                        textView.append("\n-" + s + ".");
                                     }
                                 }
-
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }
@@ -182,15 +201,19 @@ public class ResumenFragment extends Fragment {
                 builder.setMessage("¿CONFIRMA EL LLENADO COMPLETO DEL SILABUS?");
                 builder.setNegativeButton("NO", null);
                 builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().finish();
-                        dialog.dismiss();
+                    public void onClick(final DialogInterface dialog, int id) {
+                        if(completo){
+                            getActivity().finish();
+                            dialog.dismiss();
+                        }else{
+                            Toast.makeText(context, "NO SE PUEDE FINALIZAR, SILABUS INCOMPLETO", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
         });
-
     }
 }

@@ -8,12 +8,13 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/TextInputAccent">
+        android:theme="@style/TextInputPrimary">
         <android.support.design.widget.TextInputEditText
             android:id="@+id/dialog_actividad_edtActividad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ACTIVIDAD"
+            android:maxLength="30"
             android:inputType="text"/>
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

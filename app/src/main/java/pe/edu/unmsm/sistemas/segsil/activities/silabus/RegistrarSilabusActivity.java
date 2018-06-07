@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,8 +22,10 @@ import pe.edu.unmsm.sistemas.segsil.fragments.SemanasFragment;
 import pe.edu.unmsm.sistemas.segsil.fragments.UnidadesFragment;
 
 public class RegistrarSilabusActivity extends AppCompatActivity {
-    TextView btnAnterior;
-    TextView btnSiguiente;
+    LinearLayout btnAnterior;
+    LinearLayout btnSiguiente;
+    TextView txtSiguiente;
+    TextView txtTituloFragment;
     Toolbar toolbar;
 
     FirebaseAuth firebaseAuth;
@@ -37,10 +40,11 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_silabus);
 
-        btnAnterior = (TextView) findViewById(R.id.registrar_silabus_btnAnterior);
-        btnSiguiente = (TextView) findViewById(R.id.registrar_silabus_btnSiguiente);
+        btnAnterior = (LinearLayout) findViewById(R.id.registrar_silabus_layout_btnAnterior);
+        btnSiguiente = (LinearLayout) findViewById(R.id.registrar_silabus_layout_btnSiguiente);
+        txtSiguiente = (TextView) findViewById(R.id.registrar_silabus_btnSiguiente);
         toolbar = (Toolbar) findViewById(R.id.registrar_silabus_toolbar);
-
+        txtTituloFragment = (TextView) findViewById(R.id.registrar_silabus_txtTituloFragment);
 
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -49,7 +53,6 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
         idCurso = bundle.getString("id_curso");
         nombreCurso = bundle.getString("nombre_curso");
         setSupportActionBar(toolbar);
-
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -78,7 +81,6 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
                 });
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-                onBackPressed();
             }
         });
 
@@ -115,22 +117,23 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
         }
         switch (numeroFragment){
             case 1:
+                txtTituloFragment.setText("UNIDADES");
                 btnAnterior.setVisibility(View.GONE);
                 btnSiguiente.setVisibility(View.VISIBLE);
                 UnidadesFragment unidadesFragment =  new UnidadesFragment(idCurso,RegistrarSilabusActivity.this);
                 fragmentTransaction.replace(R.id.registrar_silabus_fragment,unidadesFragment);
                 break;
             case 2:
-                btnSiguiente.setText("Siguiente");
+                txtTituloFragment.setText("SEMANAS");
                 btnAnterior.setVisibility(View.VISIBLE);
                 btnSiguiente.setVisibility(View.VISIBLE);
                 SemanasFragment semanasFragment =  new SemanasFragment(idCurso, nombreCurso,RegistrarSilabusActivity.this);
                 fragmentTransaction.replace(R.id.registrar_silabus_fragment, semanasFragment);
                 break;
             case 3:
-                btnSiguiente.setText("Finalizar");
+                txtTituloFragment.setText("RESUMEN");
                 btnAnterior.setVisibility(View.VISIBLE);
-                btnSiguiente.setVisibility(View.VISIBLE);
+                btnSiguiente.setVisibility(View.GONE);
                 ResumenFragment resumenFragment =  new ResumenFragment(idCurso,RegistrarSilabusActivity.this);
                 fragmentTransaction.replace(R.id.registrar_silabus_fragment,resumenFragment);
                 break;
