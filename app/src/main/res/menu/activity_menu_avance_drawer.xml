@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/nav_semana1"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 1" />
+    <item
+        android:id="@+id/nav_semana2"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 2" />
+    <item
+        android:id="@+id/nav_semana3"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 3" />
+    <item
+        android:id="@+id/nav_semana4"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 4" />
+    <item
+        android:id="@+id/nav_semana5"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 5" />
+    <item
+        android:id="@+id/nav_semana6"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 6" />
+    <item
+        android:id="@+id/nav_semana7"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 7" />
+    <item
+        android:id="@+id/nav_semana9"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 9" />
+    <item
+        android:id="@+id/nav_semana10"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 10" />
+    <item
+        android:id="@+id/nav_semana11"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 11" />
+    <item
+        android:id="@+id/nav_semana12"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 12" />
+    <item
+        android:id="@+id/nav_semana13"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 13" />
+    <item
+        android:id="@+id/nav_semana14"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 14" />
+    <item
+        android:id="@+id/nav_semana15"
+        android:icon="@drawable/ic_book"
+        android:title="Semana 15" />
+</menu>

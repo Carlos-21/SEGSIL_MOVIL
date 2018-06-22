@@ -6,7 +6,7 @@
     android:padding="@dimen/margin_material"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragments.SemanasFragment">
+    tools:context=".fragments.silabus.SemanasFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil.fragments;
+package pe.edu.unmsm.sistemas.segsil.fragments.silabus;
 
 
 import android.annotation.SuppressLint;

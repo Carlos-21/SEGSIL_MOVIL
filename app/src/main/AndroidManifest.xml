@@ -22,28 +22,40 @@
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.BienvenidoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.admin.AdminActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.silabus.MenuSilabusActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.avance.MenuAvanceActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.control.MenuControlActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.silabus.RegistrarSilabusActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.silabus.UnidadActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.silabus.TemaActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.silabus.ActividadesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.BienvenidoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.admin.AdminActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.silabus.MenuSilabusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.control.MenuControlActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.silabus.RegistrarSilabusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.silabus.UnidadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.silabus.TemaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.silabus.ActividadesActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
+            android:name=".activities.avance.RegistrarAvanceActivity"
+            android:screenOrientation="portrait"
+            android:label="REGISTRO DE AVANCE"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.avance.MenuAvanceActivity"></activity>
     </application>
 
 </manifest>

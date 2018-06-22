@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.activities.admin.AdminActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.avance.MenuAvanceActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.avance.RegistrarAvanceActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.control.MenuControlActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.silabus.MenuSilabusActivity;
 import pe.edu.unmsm.sistemas.segsil.pojos.Perfil;

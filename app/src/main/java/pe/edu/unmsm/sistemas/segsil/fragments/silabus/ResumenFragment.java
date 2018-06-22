@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil.fragments;
+package pe.edu.unmsm.sistemas.segsil.fragments.silabus;
 
 
 import android.annotation.SuppressLint;
@@ -116,19 +116,19 @@ public class ResumenFragment extends Fragment {
         txtSemana15 = semana15.findViewById(R.id.item_resumen_txtUnidad);
         textViewSemanas = new TextView[]{txtSemana1,txtSemana2,txtSemana3,txtSemana4,txtSemana5,txtSemana6,txtSemana7,txtSemana9,txtSemana10,txtSemana11,txtSemana12,txtSemana13,txtSemana14,txtSemana15};
         txtTemasSemana1 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana2 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana3 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana4 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana5 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana6 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana7 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana9 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana10 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana11 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana12 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana13 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana14 = semana1.findViewById(R.id.item_resumen_txtTemas);
-        txtTemasSemana15 = semana1.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana2 = semana2.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana3 = semana3.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana4 = semana4.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana5 = semana5.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana6 = semana6.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana7 = semana7.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana9 = semana9.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana10 = semana10.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana11 = semana11.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana12 = semana12.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana13 = semana13.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana14 = semana14.findViewById(R.id.item_resumen_txtTemas);
+        txtTemasSemana15 = semana15.findViewById(R.id.item_resumen_txtTemas);
         textViewTemas =  new TextView[]{txtTemasSemana1, txtTemasSemana2, txtTemasSemana3, txtTemasSemana4, txtTemasSemana5, txtTemasSemana6, txtTemasSemana7, txtTemasSemana9, txtTemasSemana10, txtTemasSemana11, txtTemasSemana12, txtTemasSemana13, txtTemasSemana14, txtTemasSemana15};
         btnFinalizar = (Button) rootView.findViewById(R.id.resumen_fragment_btnFinalizar);
         return rootView;
@@ -149,7 +149,6 @@ public class ResumenFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 semanas.add(document.toObject(Semana.class));
-
                             }
                             for (int i = 0; i < semanas.size(); i++) {
                                 textViewSemanas[i].setText("SEMANA " + semanas.get(i).getNumero() + " - " + semanas.get(i).getNombreUnidad());
@@ -203,6 +202,7 @@ public class ResumenFragment extends Fragment {
                 builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, int id) {
                         if(completo){
+                            confirmarSilabus(idCurso);
                             getActivity().finish();
                             dialog.dismiss();
                         }else{
@@ -215,5 +215,11 @@ public class ResumenFragment extends Fragment {
                 alertDialog.show();
             }
         });
+    }
+
+    public void confirmarSilabus(String id_curso){
+        Map<String, Object> data = new HashMap<>();
+        data.put("silabus", true);
+        FirebaseFirestore.getInstance().collection("cursos").document(id_curso).set(data, SetOptions.merge());
     }
 }

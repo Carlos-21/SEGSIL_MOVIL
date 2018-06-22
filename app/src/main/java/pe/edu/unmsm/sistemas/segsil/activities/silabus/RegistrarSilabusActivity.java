@@ -1,7 +1,6 @@
 package pe.edu.unmsm.sistemas.segsil.activities.silabus;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -16,10 +15,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import pe.edu.unmsm.sistemas.segsil.R;
-import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
-import pe.edu.unmsm.sistemas.segsil.fragments.ResumenFragment;
-import pe.edu.unmsm.sistemas.segsil.fragments.SemanasFragment;
-import pe.edu.unmsm.sistemas.segsil.fragments.UnidadesFragment;
+import pe.edu.unmsm.sistemas.segsil.fragments.silabus.ResumenFragment;
+import pe.edu.unmsm.sistemas.segsil.fragments.silabus.SemanasFragment;
+import pe.edu.unmsm.sistemas.segsil.fragments.silabus.UnidadesFragment;
 
 public class RegistrarSilabusActivity extends AppCompatActivity {
     LinearLayout btnAnterior;

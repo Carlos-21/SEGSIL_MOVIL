@@ -26,12 +26,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
 import pe.edu.unmsm.sistemas.segsil.holders.CursoHolder;
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.pojos.Curso;
+import pe.edu.unmsm.sistemas.segsil.pojos.Semana;
 
 public class MenuSilabusActivity extends AppCompatActivity {
 
@@ -44,6 +50,7 @@ public class MenuSilabusActivity extends AppCompatActivity {
     String idCoordinador;
     FirestoreRecyclerAdapter adapter;
     FirestoreRecyclerOptions<Curso> opciones;
+    boolean acceder = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +104,12 @@ public class MenuSilabusActivity extends AppCompatActivity {
                 holder.getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent =  new Intent(MenuSilabusActivity.this,RegistrarSilabusActivity.class);
-                        intent.putExtra("nombre_curso",c.getNombreCurso());
-                        intent.putExtra("eap_curso",c.getEap());
-                        intent.putExtra("ciclo_curso",c.getCiclo());
-                        intent.putExtra("id_curso",c.getId());
-                        startActivity(intent);
+                        if(!c.isSilabus()){
+                            accedeRegistrarSilabus(c);
+                        }else{
+                            mostrarMensaje("EL SILABUS YA SE REGISTRO COMO COMPLETO, ¿DESDE CAMBIAR EL ESTADO A INCOMPLETO PARA HACER MODIFICACIONES?",c);
+                        }
+
                     }
                 });
             }
@@ -119,6 +126,32 @@ public class MenuSilabusActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    public void accedeRegistrarSilabus(Curso c){
+        Map<String, Object> data = new HashMap<>();
+        data.put("silabus", false);
+        FirebaseFirestore.getInstance().collection("cursos").document(c.getId()).set(data, SetOptions.merge());
+        Intent intent =  new Intent(MenuSilabusActivity.this,RegistrarSilabusActivity.class);
+        intent.putExtra("nombre_curso",c.getNombreCurso());
+        intent.putExtra("eap_curso",c.getEap());
+        intent.putExtra("ciclo_curso",c.getCiclo());
+        intent.putExtra("id_curso",c.getId());
+        startActivity(intent);
+    }
+
+    public void mostrarMensaje(String s, final Curso c){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(s);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                accedeRegistrarSilabus(c);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("CANCELAR",null);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
