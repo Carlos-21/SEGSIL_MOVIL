@@ -34,9 +34,6 @@
             android:name=".activities.silabus.MenuSilabusActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.control.MenuControlActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.silabus.RegistrarSilabusActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -52,10 +49,19 @@
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
             android:name=".activities.avance.RegistrarAvanceActivity"
-            android:screenOrientation="portrait"
             android:label="REGISTRO DE AVANCE"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.avance.MenuAvanceActivity"></activity>
+        <activity android:name=".activities.avance.MenuAvanceActivity" />
+        <activity android:name=".activities.control.MenuVerificarAvanceActivity" />
+        <activity
+            android:name=".activities.control.MenuVerificarSilabusActivity"
+            android:label="VERIFICAR SILABUS"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.control.VerificarAvanceActivity"
+            android:label="VERIFICAR AVANCE"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

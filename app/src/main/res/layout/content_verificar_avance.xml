@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.control.MenuControlActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.control.VerificarAvanceActivity"
+    tools:showIn="@layout/app_bar_verificar_avance">
 
 </android.support.constraint.ConstraintLayout>

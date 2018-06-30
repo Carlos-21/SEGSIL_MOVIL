@@ -1,5 +1,6 @@
 package pe.edu.unmsm.sistemas.segsil.activities.silabus;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -178,11 +179,10 @@ public class MenuSilabusActivity extends AppCompatActivity {
         builder.setMessage("¿DESEA CERRAR SESIÓN?");
         builder.setNegativeButton("CANCELAR", null);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @SuppressLint("NewApi")
             public void onClick(DialogInterface dialog, int id) {
                 firebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(MenuSilabusActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                finishAffinity();
                 dialog.dismiss();
             }
         });

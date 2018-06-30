@@ -2,25 +2,16 @@ package pe.edu.unmsm.sistemas.segsil.pojos;
 
 public class Observacion {
     private String id;
-    private String semana;
     private String observacion;
 
-    public Observacion(String id, String semana, String observacion) {
+    public Observacion(String id, String observacion) {
         this.id = id;
-        this.semana = semana;
         this.observacion = observacion;
     }
 
     public Observacion() {
     }
 
-    public String getSemana() {
-        return semana;
-    }
-
-    public void setSemana(String semana) {
-        this.semana = semana;
-    }
 
     public String getObservacion() {
         return observacion;

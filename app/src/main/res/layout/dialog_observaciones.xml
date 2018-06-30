@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusableInTouchMode="true"
+    android:layout_margin="10dp"
+    android:padding="20dp"
+    android:id="@+id/dialog_lytObservaciones"
+    >
+    <LinearLayout
+        android:background="@drawable/fondo_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="5dp">
+        <EditText
+            android:id="@+id/dialog_edtObservaciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:gravity="top"
+            android:maxLength="1000"
+            android:background="@drawable/fondo_blanco"
+            android:layout_margin="5dp"
+            />
+    </LinearLayout>
+</LinearLayout>

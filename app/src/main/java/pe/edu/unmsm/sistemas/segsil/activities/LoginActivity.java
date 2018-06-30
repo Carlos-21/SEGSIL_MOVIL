@@ -1,11 +1,15 @@
 package pe.edu.unmsm.sistemas.segsil.activities;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -42,7 +46,12 @@ public class LoginActivity extends AppCompatActivity {
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iniciarSesion(edtUsuario.getText().toString(),edtPassword.getText().toString());
+                if(!edtUsuario.getText().toString().trim().equals("") && !edtPassword.getText().toString().trim().equals("")){
+                    iniciarSesion(edtUsuario.getText().toString(),edtPassword.getText().toString());
+                }else{
+                    Toast.makeText(LoginActivity.this, "DEBE INGRESAR LOS DATOS SOLICITADOS", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -61,13 +70,38 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "USUARIO O CONTRASEÑA INCORRECTA", Toast.LENGTH_SHORT).show();
                             sesionActiva(null);
                         }
                     }
                 });
     }
 
+    @SuppressLint("NewApi")
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == event.KEYCODE_BACK) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("¿Está seguro que desea SALIR de la aplicación?")
+                    .setTitle("Aviso")
+                    .setCancelable(false)
+                    .setNegativeButton("No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .setPositiveButton("Sí",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    finishAffinity();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     public void sesionActiva(FirebaseUser user){
         if(user != null){

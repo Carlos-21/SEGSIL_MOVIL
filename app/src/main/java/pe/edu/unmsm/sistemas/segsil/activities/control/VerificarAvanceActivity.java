@@ -1,5 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil.activities.avance;
-
+package pe.edu.unmsm.sistemas.segsil.activities.control;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -7,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -26,9 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.avance.RegistrarAvanceActivity;
 import pe.edu.unmsm.sistemas.segsil.fragments.avance.AvanceSemanaFragment;
+import pe.edu.unmsm.sistemas.segsil.fragments.control.VerificarAvanceFragment;
 
-public class RegistrarAvanceActivity extends AppCompatActivity
+public class VerificarAvanceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView txtCurso;
@@ -48,7 +48,7 @@ public class RegistrarAvanceActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registrar_avance);
+        setContentView(R.layout.activity_verificar_avance);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
         setSupportActionBar(toolbar);
@@ -58,7 +58,6 @@ public class RegistrarAvanceActivity extends AppCompatActivity
         perfil = bundle.getInt("perfil");
         nombreCurso = bundle.getString("nombre");
         nombreProfesor = bundle.getString("profesor");
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,10 +73,10 @@ public class RegistrarAvanceActivity extends AppCompatActivity
         txtProfesor.setText(nombreProfesor);
         navigationView.setNavigationItemSelectedListener(this);
 
-        AvanceSemanaFragment avanceSemanaFragment = new AvanceSemanaFragment(idGrupo,idCurso,1,RegistrarAvanceActivity.this,perfil);
+        VerificarAvanceFragment verificarAvanceFragment = new VerificarAvanceFragment(idGrupo,idCurso,1,VerificarAvanceActivity.this,perfil);
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.registrar_avance_fragment_layout,avanceSemanaFragment);
+        fragmentTransaction.replace(R.id.registrar_avance_fragment_layout,verificarAvanceFragment);
         fragmentTransaction.commit();
     }
 
@@ -124,24 +123,24 @@ public class RegistrarAvanceActivity extends AppCompatActivity
         int id = item.getItemId();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        AvanceSemanaFragment avanceSemanaFragment = new AvanceSemanaFragment();
+        VerificarAvanceFragment verificarAvanceFragment = new VerificarAvanceFragment();
         switch (id){
-            case R.id.nav_semana1: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,1,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana2: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,2,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana3: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,3,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana4: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,4,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana5: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,5,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana6: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,6,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana7: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,7,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana9: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,9,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana10: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,10,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana11: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,11,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana12: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,12,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana13: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,13,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana14: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,14,RegistrarAvanceActivity.this,perfil);break;
-            case R.id.nav_semana15: avanceSemanaFragment = new AvanceSemanaFragment(idGrupo, idCurso,15,RegistrarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana1: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,1,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana2: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,2,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana3: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,3,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana4: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,4,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana5: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,5,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana6: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,6,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana7: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,7,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana9: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,9,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana10: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,10,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana11: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,11,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana12: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,12,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana13: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,13,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana14: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,14,VerificarAvanceActivity.this,perfil);break;
+            case R.id.nav_semana15: verificarAvanceFragment = new VerificarAvanceFragment(idGrupo, idCurso,15,VerificarAvanceActivity.this,perfil);break;
         }
-        fragmentTransaction.replace(R.id.registrar_avance_fragment_layout,avanceSemanaFragment);
+        fragmentTransaction.replace(R.id.registrar_avance_fragment_layout,verificarAvanceFragment);
         fragmentTransaction.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

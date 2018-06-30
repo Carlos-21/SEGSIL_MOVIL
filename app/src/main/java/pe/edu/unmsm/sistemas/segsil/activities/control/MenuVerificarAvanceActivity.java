@@ -1,4 +1,4 @@
-package pe.edu.unmsm.sistemas.segsil.activities.avance;
+package pe.edu.unmsm.sistemas.segsil.activities.control;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -31,14 +31,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.avance.MenuAvanceActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.avance.RegistrarAvanceActivity;
+import pe.edu.unmsm.sistemas.segsil.holders.CursoHolder;
 import pe.edu.unmsm.sistemas.segsil.holders.GrupoHolder;
+import pe.edu.unmsm.sistemas.segsil.pojos.Curso;
 import pe.edu.unmsm.sistemas.segsil.pojos.Grupo;
+import pe.edu.unmsm.sistemas.segsil.pojos.Perfil;
 import pe.edu.unmsm.sistemas.segsil.pojos.Perfiles;
 
-public class MenuAvanceActivity extends AppCompatActivity {
+public class MenuVerificarAvanceActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
-    TextView txtProfesor;
     RecyclerView recyclerView;
     String TAG = "FIRESTORE";
     Toolbar myToolbar;
@@ -51,20 +55,18 @@ public class MenuAvanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_avance);
+        setContentView(R.layout.activity_menu_verificar_avance);
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        recyclerView = (RecyclerView) findViewById(R.id.avance_recycler);
-        txtProfesor = (TextView)findViewById(R.id.avance_txtProfesor);
+        recyclerView = (RecyclerView) findViewById(R.id.menu_verificar_avance_recycler);
 
         Bundle bundle = getIntent().getExtras();
-        txtProfesor.setText("Profesor: "+ bundle.getString("nombre") + " " + bundle.getString("apellido"));
         idUsuario = bundle.getString("id");
         perfil = bundle.getInt("perfil");
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("REGISTRAR AVANCE");
+        getSupportActionBar().setTitle("VERIFICAR AVANCE");
         myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,8 +74,9 @@ public class MenuAvanceActivity extends AppCompatActivity {
             }
         });
 
-        if(perfil == Perfiles.PROFESOR) query = db.collection("grupos").whereEqualTo("codProfesor", idUsuario);
-        else query = db.collection("grupos").whereEqualTo("codDelegado", idUsuario);
+        if(perfil == Perfiles.DECANO) query = db.collection("grupos");
+        else if (perfil == Perfiles.DIRECTOR_SISTEMAS) query = db.collection("grupos").whereEqualTo("eap", "SS");
+        else if (perfil == Perfiles.DIRECTOR_SOFTWARE)  query = db.collection("grupos").whereEqualTo("eap", "SW");
         query.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -100,7 +103,7 @@ public class MenuAvanceActivity extends AppCompatActivity {
                 holder.getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent =  new Intent(MenuAvanceActivity.this,RegistrarAvanceActivity.class);
+                        Intent intent =  new Intent(MenuVerificarAvanceActivity.this,VerificarAvanceActivity.class);
                         intent.putExtra("nombre",g.getNombrePlan1());
                         intent.putExtra("eap",g.getEap());
                         intent.putExtra("numero",g.getNumero());
@@ -127,6 +130,7 @@ public class MenuAvanceActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

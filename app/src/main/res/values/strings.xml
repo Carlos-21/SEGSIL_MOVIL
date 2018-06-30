@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SEGSIL</string>
     <string name="action_settings">Settings</string>
-    <string name="siglas_sistema">SIGSEL</string>
+    <string name="siglas_sistema">SEGSIL</string>
     <string name="nombre_sistema">Sistema de Seguimiento de Silabus</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -14,4 +14,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_volver">Volver al menú</string>
     <string name="action_sesion">Cerrar Sesion</string>
+    <string name="title_activity_verificar_silabus">VerificarSilabusActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_verificar_avance">VerificarAvanceActivity</string>
 </resources>
