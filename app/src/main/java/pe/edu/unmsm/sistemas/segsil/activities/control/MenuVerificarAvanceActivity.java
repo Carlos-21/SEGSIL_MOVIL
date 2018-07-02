@@ -100,6 +100,50 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
             }
         });
 
+        busqueda.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                query = db.collection("grupos").whereEqualTo("nombrePlan1", busqueda.getText().toString());
+                opciones = new FirestoreRecyclerOptions.Builder<Grupo>().setQuery(query, Grupo.class).build();
+                adapter =  new  FirestoreRecyclerAdapter < Grupo , GrupoHolder> (opciones) {
+                    @Override
+                    public void onBindViewHolder(GrupoHolder holder, int position, Grupo model) {
+                        final Grupo g = model;
+                        holder.setHolderTxtEap(model.getEap().toString());
+                        holder.setHolderTxtNombre(model.getNombrePlan1());
+                        holder.setHolderTxtNumero(model.getNumero()+"");
+                        holder.setHolderTxtTipo(model.getTipo()+"");
+                        holder.getCardView().setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent =  new Intent(MenuVerificarAvanceActivity.this,VerificarAvanceActivity.class);
+                                intent.putExtra("nombre",g.getNombrePlan1());
+                                intent.putExtra("eap",g.getEap());
+                                intent.putExtra("numero",g.getNumero());
+                                intent.putExtra("ciclo",g.getCiclo());
+                                intent.putExtra("tipo",g.getTipo());
+                                intent.putExtra("idGrupo",g.getId());
+                                intent.putExtra("profesor",g.getNomProfesor());
+                                intent.putExtra("curso",g.getCodCurso());
+                                intent.putExtra("perfil",perfil);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public GrupoHolder onCreateViewHolder(ViewGroup group, int i) {
+                        View view = LayoutInflater.from(group.getContext()).inflate(R.layout.item_grupo, group, false);
+                        return new GrupoHolder(view);
+                    }
+                };
+                recyclerView.setAdapter(adapter);
+                adapter.stopListening();
+                adapter.startListening();
+                ocultarTeclado(lytSeleccionar);
+                lytSeleccionar.requestFocus();
+            }
+        });
 
         spFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -159,7 +203,6 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
                                     Log.d("CARGANDO COMPLETE", document.getId() + " => " + document.getData());
                                     cursos.add(document.toObject(Grupo.class).getNombrePlan1());
                                 }
-//                            String[] bar = cursos.toArray(new String[cursos.size()]);
                                 ArrayAdapter<String> adapterArray = new ArrayAdapter<String>(MenuVerificarAvanceActivity.this, android.R.layout.select_dialog_item,cursos);
                                 busqueda.setAdapter(adapterArray);
 
@@ -182,7 +225,6 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
                                     Log.d("CARGANDO COMPLETE", document.getId() + " => " + document.getData());
                                     cursos.add(document.toObject(Grupo.class).getNombrePlan1());
                                 }
-//                            String[] bar = cursos.toArray(new String[cursos.size()]);
                                 ArrayAdapter<String> adapterArray = new ArrayAdapter<String>(MenuVerificarAvanceActivity.this, android.R.layout.select_dialog_item,cursos);
                                 busqueda.setAdapter(adapterArray);
                             } else {
@@ -193,19 +235,6 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
             lytSeleccionar.setVisibility(View.GONE);
             busqueda.setVisibility(View.VISIBLE);
         }
-//        query.get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (DocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData());
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
 
         opciones = new FirestoreRecyclerOptions.Builder<Grupo>().setQuery(query, Grupo.class).build();
         adapter =  new  FirestoreRecyclerAdapter < Grupo , GrupoHolder> (opciones) {
