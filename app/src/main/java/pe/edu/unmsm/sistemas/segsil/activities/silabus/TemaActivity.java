@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -99,10 +101,15 @@ public class TemaActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TemaActivity.this, ActividadesActivity.class);
-                intent.putExtra("idCurso",idCurso);
-                intent.putExtra("numeroSemana",numero);
-                startActivity(intent);
+                if(recyclerView.getAdapter().getItemCount() < 2){
+                    Intent intent = new Intent(TemaActivity.this, ActividadesActivity.class);
+                    intent.putExtra("idCurso",idCurso);
+                    intent.putExtra("numeroSemana",numero);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(TemaActivity.this, "Ya alcanzó el máximo número de temas por semana", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

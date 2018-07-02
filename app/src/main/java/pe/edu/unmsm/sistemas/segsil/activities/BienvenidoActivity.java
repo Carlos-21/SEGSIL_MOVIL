@@ -164,24 +164,16 @@ public class BienvenidoActivity extends AppCompatActivity {
         if(user != null){
             final String idUsuario = user.getEmail().substring(0,user.getEmail().indexOf("@"));
 
-            DocumentReference docRef1 = db.collection("personas").document(idUsuario);
-            docRef1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    Persona persona = documentSnapshot.toObject(Persona.class);
-                    nombre = persona.getNombres();
-                    apellido = persona.getApellidos();
-                    txtIdUsuario.setText(idUsuario);
-                    txtNombreUsuario.setText("Bienvenido, " + (nombre + " " + apellido).toUpperCase());
-                }
-            });
-
             DocumentReference docRef2 = db.collection("usuarios").document(idUsuario);
             docRef2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     Usuario usuario = documentSnapshot.toObject(Usuario.class);
                     perfil = usuario.getPerfil();
+                    nombre = usuario.getNombres();
+                    apellido = usuario.getApellidos();
+                    txtIdUsuario.setText(idUsuario);
+                    txtIdUsuario.setText(idUsuario);
                     if(perfil.isAdministrador()){
                         cvRegistrarSilabus.setVisibility(View.VISIBLE);
                         cvRegistrarAvance.setVisibility(View.VISIBLE);
@@ -190,9 +182,19 @@ public class BienvenidoActivity extends AppCompatActivity {
                     if(perfil.isDecanato() || perfil.isDirector_ss() || perfil.isDirector_sw()){
                         cvVerificarAvance.setVisibility(View.VISIBLE);
                         cvVerificarSilabus.setVisibility(View.VISIBLE);
+                        if(perfil.isDecanato())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDecano");
+                        if(perfil.isDirector_sw())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDirector de Escuela Software");
+                        if(perfil.isDirector_ss())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDirector de Escuela Sistemas");
                     }
-                    if(perfil.isCoordinador()) cvRegistrarSilabus.setVisibility(View.VISIBLE);
-                    if (perfil.isProfesor() || perfil.isDelegado()) cvRegistrarAvance.setVisibility(View.VISIBLE);
+                    if(perfil.isCoordinador()) {
+                        cvRegistrarSilabus.setVisibility(View.VISIBLE);
+                        txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nCoordinador de Curso");
+                    }
+                    if (perfil.isProfesor() || perfil.isDelegado()) {
+                        cvRegistrarAvance.setVisibility(View.VISIBLE);
+                        if(perfil.isProfesor())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nProfesor de Curso");
+                        if(perfil.isDelegado())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDelegado de curso");
+                    }
                     btnCerrarSesion.setVisibility(View.VISIBLE);
                     txtCargando.setVisibility(View.GONE);
                 }

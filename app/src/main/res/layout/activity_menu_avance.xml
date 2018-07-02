@@ -38,6 +38,34 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin5dp"
+            android:layout_marginBottom="@dimen/margin5dp"
+            android:background="@drawable/fondo_edit_text">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="SS\t\t\t: Ingeniería de Sistemas"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="SW\t\t: Ingeniería de Software"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="G\t\t\t\t: Número de grupo"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="T\t\t\t\t: Tipo de Grupo"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6">
             <android.support.v7.widget.CardView
