@@ -19,18 +19,8 @@
     <string name="title_activity_verificar_avance">VerificarAvanceActivity</string>
 
     <string-array name="filtros">
-        <item>Ninguno</item>
-        <item>Nombre</item>
-        <item>EAP</item>
-        <item>Tipo</item>
+        <item>Mostrar Todo</item>
+        <item>Buscar Nombre</item>
     </string-array>
-    <string-array name="eaps">
-        <item>Sistemas</item>
-        <item>Software</item>
-    </string-array>
-    <string-array name="tipos">
-        <item>Teoria</item>
-        <item>Practica</item>
-        <item>Laboratorio</item>
-    </string-array>
+
 </resources>

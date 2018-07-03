@@ -7,6 +7,7 @@ public class Grupo {
     private String tipo;
     private String codCurso;
     private int ciclo;
+    private String nombreCurso;
     private String nombrePlan1;
     private String nombrePlan2;
     private String codCoordinador;
@@ -17,13 +18,14 @@ public class Grupo {
     private String nomDelegado;
 
 
-    public Grupo(String id, String eap, int numero, String tipo, String codCurso, int ciclo, String nombrePlan1, String nombrePlan2, String codCoordinador, String nomCoordinador, String codProfesor, String nomProfesor, String codDelegado, String nomDelegado) {
+    public Grupo(String id, String eap, int numero, String tipo, String codCurso, int ciclo, String nombreCurso, String nombrePlan1, String nombrePlan2, String codCoordinador, String nomCoordinador, String codProfesor, String nomProfesor, String codDelegado, String nomDelegado) {
         this.id = id;
         this.eap = eap;
         this.numero = numero;
         this.tipo = tipo;
         this.codCurso = codCurso;
         this.ciclo = ciclo;
+        this.nombreCurso = nombreCurso;
         this.nombrePlan1 = nombrePlan1;
         this.nombrePlan2 = nombrePlan2;
         this.codCoordinador = codCoordinador;
@@ -147,5 +149,13 @@ public class Grupo {
 
     public void setCiclo(int ciclo) {
         this.ciclo = ciclo;
+    }
+
+    public String getNombreCurso() {
+        return nombreCurso;
+    }
+
+    public void setNombreCurso(String nombreCurso) {
+        this.nombreCurso = nombreCurso;
     }
 }

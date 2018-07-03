@@ -61,10 +61,8 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
     String TAG = "FIRESTORE";
     Toolbar myToolbar;
     String idUsuario;
-    Spinner spFiltro;
     AutoCompleteTextView busqueda;
-    Spinner spTipos;
-    Spinner spEaps;
+    Spinner spFiltro;
     Query query;
     LinearLayout lytSeleccionar;
     int perfil;
@@ -80,12 +78,9 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.menu_verificar_avance_recycler);
-        spFiltro = (Spinner) findViewById(R.id.menu_verificar_avance_filtro);
-        spEaps = (Spinner) findViewById(R.id.menu_verificar_avance_eaps);
-        spTipos = (Spinner) findViewById(R.id.menu_verificar_avance_tipos);
         busqueda = (AutoCompleteTextView) findViewById(R.id.menu_verificar_avance_search);
         lytSeleccionar = (LinearLayout) findViewById(R.id.menu_verificar_avance_layout_seleccionar);
-
+        spFiltro = (Spinner) findViewById(R.id.menu_verificar_avance_spFiltro);
         busqueda.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(50)});
         busqueda.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -103,43 +98,19 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
         busqueda.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                query = db.collection("grupos").whereEqualTo("nombrePlan1", busqueda.getText().toString());
-                opciones = new FirestoreRecyclerOptions.Builder<Grupo>().setQuery(query, Grupo.class).build();
-                adapter =  new  FirestoreRecyclerAdapter < Grupo , GrupoHolder> (opciones) {
-                    @Override
-                    public void onBindViewHolder(GrupoHolder holder, int position, Grupo model) {
-                        final Grupo g = model;
-                        holder.setHolderTxtEap(model.getEap().toString());
-                        holder.setHolderTxtNombre(model.getNombrePlan1());
-                        holder.setHolderTxtNumero(model.getNumero()+"");
-                        holder.setHolderTxtTipo(model.getTipo()+"");
-                        holder.getCardView().setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent =  new Intent(MenuVerificarAvanceActivity.this,VerificarAvanceActivity.class);
-                                intent.putExtra("nombre",g.getNombrePlan1());
-                                intent.putExtra("eap",g.getEap());
-                                intent.putExtra("numero",g.getNumero());
-                                intent.putExtra("ciclo",g.getCiclo());
-                                intent.putExtra("tipo",g.getTipo());
-                                intent.putExtra("idGrupo",g.getId());
-                                intent.putExtra("profesor",g.getNomProfesor());
-                                intent.putExtra("curso",g.getCodCurso());
-                                intent.putExtra("perfil",perfil);
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public GrupoHolder onCreateViewHolder(ViewGroup group, int i) {
-                        View view = LayoutInflater.from(group.getContext()).inflate(R.layout.item_grupo, group, false);
-                        return new GrupoHolder(view);
-                    }
-                };
-                recyclerView.setAdapter(adapter);
-                adapter.stopListening();
-                adapter.startListening();
+                if(perfil == Perfiles.DECANO) {
+                    query = db.collection("grupos")
+                            .whereEqualTo("nombreCurso", busqueda.getText().toString());
+                } else if (perfil == Perfiles.DIRECTOR_SISTEMAS) {
+                    query = db.collection("grupos")
+                            .whereEqualTo("eap", "SS")
+                            .whereEqualTo("nombreCurso", busqueda.getText().toString());
+                } else if (perfil == Perfiles.DIRECTOR_SOFTWARE){
+                    query = db.collection("grupos")
+                            .whereEqualTo("eap", "SW")
+                            .whereEqualTo("nombreCurso", busqueda.getText().toString());
+                }
+                cargarRecycler();
                 ocultarTeclado(lytSeleccionar);
                 lytSeleccionar.requestFocus();
             }
@@ -150,24 +121,18 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        busqueda.setVisibility(View.GONE);
-                        spEaps.setVisibility(View.GONE);
-                        spTipos.setVisibility(View.GONE);
+                        lytSeleccionar.setVisibility(View.GONE);
+                        busqueda.setText("");
+                        if(perfil == Perfiles.DECANO) {query = db.collection("grupos");}
+                        else if (perfil == Perfiles.DIRECTOR_SISTEMAS) {
+                            query = db.collection("grupos").whereEqualTo("eap", "SS");
+                        } else if (perfil == Perfiles.DIRECTOR_SOFTWARE){
+                            query = db.collection("grupos").whereEqualTo("eap", "SW");
+                        }
+                        cargarRecycler();
                         break;
                     case 1:
-                        busqueda.setVisibility(View.VISIBLE);
-                        spEaps.setVisibility(View.GONE);
-                        spTipos.setVisibility(View.GONE);
-                        break;
-                    case 2:
-                        busqueda.setVisibility(View.GONE);
-                        spEaps.setVisibility(View.VISIBLE);
-                        spTipos.setVisibility(View.GONE);
-                        break;
-                    case 3:
-                        busqueda.setVisibility(View.GONE);
-                        spEaps.setVisibility(View.GONE);
-                        spTipos.setVisibility(View.VISIBLE);
+                        lytSeleccionar.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -192,8 +157,8 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
 
         if(perfil == Perfiles.DECANO) {query = db.collection("grupos");}
         else if (perfil == Perfiles.DIRECTOR_SISTEMAS) {
-            query = db.collection("grupos").whereEqualTo("eap", "SS");
-            FirebaseFirestore.getInstance().collection("grupos").whereEqualTo("eap", "SS").get()
+            query = db.collection("cursos").whereEqualTo("eap", "SS");
+            query.get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -201,9 +166,9 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
                                 List<String> cursos = new ArrayList<String>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d("CARGANDO COMPLETE", document.getId() + " => " + document.getData());
-                                    cursos.add(document.toObject(Grupo.class).getNombrePlan1());
+                                    cursos.add(document.toObject(Curso.class).getNombreCurso());
                                 }
-                                ArrayAdapter<String> adapterArray = new ArrayAdapter<String>(MenuVerificarAvanceActivity.this, android.R.layout.select_dialog_item,cursos);
+                                ArrayAdapter<String> adapterArray = new ArrayAdapter<String>(MenuVerificarAvanceActivity.this, R.layout.layout_item_busqueda,cursos);
                                 busqueda.setAdapter(adapterArray);
 
                             } else {
@@ -211,11 +176,9 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
                             }
                         }
                     });
-            lytSeleccionar.setVisibility(View.GONE);
-            busqueda.setVisibility(View.VISIBLE);
         } else if (perfil == Perfiles.DIRECTOR_SOFTWARE){
-            query = db.collection("grupos").whereEqualTo("eap", "SW");
-            FirebaseFirestore.getInstance().collection("grupos").whereEqualTo("eap", "SW").get()
+            query = db.collection("cursos").whereEqualTo("eap", "SW");
+            query.get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -223,17 +186,15 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
                                 List<String> cursos = new ArrayList<String>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d("CARGANDO COMPLETE", document.getId() + " => " + document.getData());
-                                    cursos.add(document.toObject(Grupo.class).getNombrePlan1());
+                                    cursos.add(document.toObject(Curso.class).getNombreCurso());
                                 }
-                                ArrayAdapter<String> adapterArray = new ArrayAdapter<String>(MenuVerificarAvanceActivity.this, android.R.layout.select_dialog_item,cursos);
+                                ArrayAdapter<String> adapterArray = new ArrayAdapter<String>(MenuVerificarAvanceActivity.this, R.layout.layout_item_busqueda,cursos);
                                 busqueda.setAdapter(adapterArray);
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }
                         }
                     });
-            lytSeleccionar.setVisibility(View.GONE);
-            busqueda.setVisibility(View.VISIBLE);
         }
 
         opciones = new FirestoreRecyclerOptions.Builder<Grupo>().setQuery(query, Grupo.class).build();
@@ -242,7 +203,7 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
             public void onBindViewHolder(GrupoHolder holder, int position, Grupo model) {
                 final Grupo g = model;
                 holder.setHolderTxtEap(model.getEap().toString());
-                holder.setHolderTxtNombre(model.getNombrePlan1());
+                holder.setHolderTxtNombre(model.getNombreCurso());
                 holder.setHolderTxtNumero(model.getNumero()+"");
                 holder.setHolderTxtTipo(model.getTipo()+"");
                 holder.getCardView().setOnClickListener(new View.OnClickListener() {
@@ -323,5 +284,44 @@ public class MenuVerificarAvanceActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    public void cargarRecycler(){
+        opciones = new FirestoreRecyclerOptions.Builder<Grupo>().setQuery(query, Grupo.class).build();
+        adapter =  new  FirestoreRecyclerAdapter < Grupo , GrupoHolder> (opciones) {
+            @Override
+            public void onBindViewHolder(GrupoHolder holder, int position, Grupo model) {
+                final Grupo g = model;
+                holder.setHolderTxtEap(model.getEap().toString());
+                holder.setHolderTxtNombre(model.getNombreCurso());
+                holder.setHolderTxtNumero(model.getNumero()+"");
+                holder.setHolderTxtTipo(model.getTipo()+"");
+                holder.getCardView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent =  new Intent(MenuVerificarAvanceActivity.this,VerificarAvanceActivity.class);
+                        intent.putExtra("nombre",g.getNombreCurso());
+                        intent.putExtra("eap",g.getEap());
+                        intent.putExtra("numero",g.getNumero());
+                        intent.putExtra("ciclo",g.getCiclo());
+                        intent.putExtra("tipo",g.getTipo());
+                        intent.putExtra("idGrupo",g.getId());
+                        intent.putExtra("profesor",g.getNomProfesor());
+                        intent.putExtra("curso",g.getCodCurso());
+                        intent.putExtra("perfil",perfil);
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public GrupoHolder onCreateViewHolder(ViewGroup group, int i) {
+                View view = LayoutInflater.from(group.getContext()).inflate(R.layout.item_grupo, group, false);
+                return new GrupoHolder(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.stopListening();
+        adapter.startListening();
     }
 }

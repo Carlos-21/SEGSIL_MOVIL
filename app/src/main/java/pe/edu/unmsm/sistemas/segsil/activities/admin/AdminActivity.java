@@ -38,21 +38,21 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 db = FirebaseFirestore.getInstance();
 //                cargaUsuarios();
-//                cargaCursos();
+                cargaCursos();
                 cargarGrupos();
             }
         });
 
-        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                firebaseAuth.signOut();
-                Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//                firebaseAuth.signOut();
+//                Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
     }
 
     public void cargaUsuarios(){
@@ -88,49 +88,49 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     public void cargaCursos(){
-        db.collection("cursos").document("sscompinf").set(new Curso("sscompinf","SS",1,"INTRODUCCIÓN A LA  COMPUTACION","(2014)INTRODUCCIÓN A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO",false));
-        db.collection("cursos").document("ssteosis").set(new Curso("ssteosis","SS",1,"TEORIA DE SISTEMAS","(2014)TEORIA DE SISTEMAS","(2009)TEORÍA GENERAL DE SISTEMAS","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO",false));
-        db.collection("cursos").document("sscomdin").set(new Curso("sscomdin","SS",1,"COMUNICACIÓN Y DINÁMICA DE GRUPO","(2014)COMUNICACIÓN Y DINÁMICA DE GRUPO","(2009)TALLER DE TÉCNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER",false));
-        db.collection("cursos").document("ssestapinv").set(new Curso("ssestapinv","SS",1,"ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","(2014) ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","","rsolis","SOLIS NARRO ROLANDO",false));
-        db.collection("cursos").document("sscalc1").set(new Curso("sscalc1","SS",1,"CÁLCULO I","(2014)CÁLCULO I","(2009)CÁLCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER",false));
-        db.collection("cursos").document("ssmatbas1").set(new Curso("ssmatbas1","SS",1,"MATEMÁTICA BÁSICA I","(2014)MATEMÁTICA BÁSICA I","(2009)MATEMÁTICA BÁSICA I" ,"lcachi","CACHI MONTOYA LUIS",false));
-        db.collection("cursos").document("sseticpro").set(new Curso("sseticpro","SS",1,"ÉTICA DE LA PROFESIÓN","(2014) ÉTICA DE LA PROFESIÓN","","cmora","CARLOS ABEL MORA ZAVALA",false));
+        db.collection("cursos").document("sscompinf").set(new Curso("sscompinf","SS",1,"INTRODUCCION A LA  COMPUTACION","(2014)INTRODUCCION A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO",false));
+        db.collection("cursos").document("ssteosis").set(new Curso("ssteosis","SS",1,"TEORIA DE SISTEMAS","(2014)TEORIA DE SISTEMAS","(2009)TEORIA GENERAL DE SISTEMAS","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO",false));
+        db.collection("cursos").document("swcomdin").set(new Curso("swcomdin","SW",1,"COMUNICACION Y DINAMICA DE GRUPO","(2014)COMUNICACION Y DINAMICA DE GRUPO","(2009)TALLER DE TECNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER",false));
+        db.collection("cursos").document("swestapinv").set(new Curso("swestapinv","SW",1,"ESTRATEGIAS DE APRENDIZAJE E INVESTIGACION","(2014) ESTRATEGIAS DE APRENDIZAJE E INVESTIGACION","","rsolis","SOLIS NARRO ROLANDO",false));
+        db.collection("cursos").document("sscalc1").set(new Curso("sscalc1","SS",1,"CALCULO I","(2014)CALCULO I","(2009)CALCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER",false));
+        db.collection("cursos").document("ssmatbas1").set(new Curso("ssmatbas1","SS",1,"MATEMATICA BASICA I","(2014)MATEMATICA BASICA I","(2009)MATEMATICA BASICA I" ,"lcachi","CACHI MONTOYA LUIS",false));
+        db.collection("cursos").document("sweticpro").set(new Curso("sweticpro","SW",1,"ETICA DE LA PROFESION","(2014) ETICA DE LA PROFESION","","cmora","CARLOS ABEL MORA ZAVALA",false));
     }
 
 
     public void cargarGrupos(){
         db.collection("grupos").document("sscompinfg1tt").
-                set(new Grupo("sscompinfg1tt","SS",1,"T","sscompinf",1,"(2014)INTRODUCCIÓN A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO","smurakami","MURAKAMI CRUZ SUMIKO","dmorales","DENIS MORALES RETAMOZO"));
+                set(new Grupo("sscompinfg1tt","SS",1,"T","sscompinf",1,"INTRODUCCION A LA  COMPUTACION","(2014)INTRODUCCION A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO","smurakami","MURAKAMI CRUZ SUMIKO","dmorales","DENIS MORALES RETAMOZO"));
         db.collection("grupos").document("sscompinfg1tl").
-                set(new Grupo("sscompinfg1tl","SS",1,"L","sscompinf",1,"(2014)INTRODUCCIÓN A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO","smurakami","MURAKAMI CRUZ SUMIKO","dmorales","DENIS MORALES RETAMOZO"));
+                set(new Grupo("sscompinfg1tl","SS",1,"L","sscompinf",1,"INTRODUCCION A LA  COMPUTACION","(2014)INTRODUCCION A LA  COMPUTACION","(2009)COMPUTACION E INFORMATICA","smurakami","MURAKAMI CRUZ SUMIKO","smurakami","MURAKAMI CRUZ SUMIKO","dmorales","DENIS MORALES RETAMOZO"));
 
         db.collection("grupos").document("ssteosisg1tt").
-                set(new Grupo("ssteosisg1tt","SS",1,"T","ssteosis",1,"(2014)TEORIA DE SISTEMAS","(2009)TEORÍA GENERAL DE SISTEMAS","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO","dmorales","DENIS MORALES RETAMOZO"));
+                set(new Grupo("ssteosisg1tt","SS",1,"T","ssteosis",1,"TEORIA DE SISTEMAS","(2014)TEORIA DE SISTEMAS","(2009)TEORIA GENERAL DE SISTEMAS","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO","fescobedo","ESCOBEDO BAILON FRANK EDMUNDO","dmorales","DENIS MORALES RETAMOZO"));
 
-        db.collection("grupos").document("sscomding1tt").
-                set(new Grupo("sscomding1tt","SS",1,"T","sscomdin",1,"(2014)COMUNICACIÓN Y DINÁMICA DE GRUPO","(2009)TALLER DE TÉCNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER","wchalco","CHALCO ARANGONITA WALTER","dmorales","DENIS MORALES RETAMOZO"));
-        db.collection("grupos").document("sscomding1tp").
-                set(new Grupo("sscomding1tp","SS",1,"P","sscomdin",1,"(2014)COMUNICACIÓN Y DINÁMICA DE GRUPO","(2009)TALLER DE TÉCNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER","wchalco","CHALCO ARANGONITA WALTER","dmorales","DENIS MORALES RETAMOZO"));
+        db.collection("grupos").document("swcomding1tt").
+                set(new Grupo("swcomding1tt","SW",1,"T","swcomdin",1,"COMUNICACION Y DINAMICA DE GRUPO","(2014)COMUNICACIÓN Y DINAMICA DE GRUPO","(2009)TALLER DE TECNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER","wchalco","CHALCO ARANGONITA WALTER","dmorales","DENIS MORALES RETAMOZO"));
+        db.collection("grupos").document("swcomding1tp").
+                set(new Grupo("swcomding1tp","SW",1,"P","swcomdin",1,"COMUNICACION Y DINAMICA DE GRUPO","(2014)COMUNICACIÓN Y DINAMICA DE GRUPO","(2009)TALLER DE TECNICAS DE ESTUDIO","wchalco","CHALCO ARANGONITA WALTER","wchalco","CHALCO ARANGONITA WALTER","dmorales","DENIS MORALES RETAMOZO"));
 
-        db.collection("grupos").document("ssestapinvg1tt").
-                set(new Grupo("ssestapinvg1tt","SS",1,"T","ssestapinv",1,"(2014) ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","","rsolis","SOLIS NARRO ROLANDO","rsolis","SOLIS NARRO ROLANDO","dmorales","DENIS MORALES RETAMOZO"));
-        db.collection("grupos").document("ssestapinvg1tp").
-                set(new Grupo("ssestapinvg1tp","SS",1,"P","ssestapinv",1,"(2014) ESTRATÉGIAS DE APRENDIZAJE E INVESTIGACIÓN","","rsolis","SOLIS NARRO ROLANDO","rsolis","SOLIS NARRO ROLANDO","dmorales","DENIS MORALES RETAMOZO"));
+        db.collection("grupos").document("swestapinvg1tt").
+                set(new Grupo("swestapinvg1tt","SW",1,"T","swestapinv",1,"ESTRATEGIAS DE APRENDIZAJE E INVESTIGACION","(2014) ESTRATEGIAS DE APRENDIZAJE E INVESTIGACION","","rsolis","SOLIS NARRO ROLANDO","rsolis","SOLIS NARRO ROLANDO","dmorales","DENIS MORALES RETAMOZO"));
+        db.collection("grupos").document("swestapinvg1tp").
+                set(new Grupo("swestapinvg1tp","SW",1,"P","swestapinv",1,"ESTRATEGIAS DE APRENDIZAJE E INVESTIGACION","(2014) ESTRATEGIAS DE APRENDIZAJE E INVESTIGACION","","rsolis","SOLIS NARRO ROLANDO","rsolis","SOLIS NARRO ROLANDO","dmorales","DENIS MORALES RETAMOZO"));
 
         db.collection("grupos").document("sscalc1g1tt").
-                set(new Grupo("sscalc1g1tt","SS",1,"T","sscalc",1,"(2014)CÁLCULO I","(2009)CÁLCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER","wacuna","ACUÑA MONTAÑEZ, WALTER","dmorales","DENIS MORALES RETAMOZO"));
+                set(new Grupo("sscalc1g1tt","SS",1,"T","sscalc",1,"CALCULO I","(2014)CALCULO I","(2009)CALCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER","wacuna","ACUÑA MONTAÑEZ, WALTER","dmorales","DENIS MORALES RETAMOZO"));
         db.collection("grupos").document("sscalc1g1tp").
-                set(new Grupo("sscalc1g1tp","SS",1,"P","sscalc",1,"(2014)CÁLCULO I","(2009)CÁLCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER","wacuna","ACUÑA MONTAÑEZ, WALTER","dmorales","DENIS MORALES RETAMOZO"));
+                set(new Grupo("sscalc1g1tp","SS",1,"P","sscalc",1,"CALCULO I","(2014)CALCULO I","(2009)CALCULO I","wacuna","ACUÑA MONTAÑEZ, WALTER","wacuna","ACUÑA MONTAÑEZ, WALTER","dmorales","DENIS MORALES RETAMOZO"));
 
         db.collection("grupos").document("ssmatbas1g1tt").
-                set(new Grupo("ssmatbas1g1tt","SS",1,"T","ssmatbas",1,"(2014)MATEMÁTICA BÁSICA I","(2009)MATEMÁTICA BÁSICA I" ,"lcachi","CACHI MONTOYA LUIS","lcachi","CACHI MONTOYA LUIS","dmorales","DENIS MORALES RETAMOZO"));
+                set(new Grupo("ssmatbas1g1tt","SS",1,"T","ssmatbas",1,"MATEMATICA BASICA I","(2014)MATEMATICA BASICA I","(2009)MATEMATICA BASICA I" ,"lcachi","CACHI MONTOYA LUIS","lcachi","CACHI MONTOYA LUIS","dmorales","DENIS MORALES RETAMOZO"));
         db.collection("grupos").document("ssmatbas1g1tp").
-                set(new Grupo("ssmatbas1g1tp","SS",1,"P","ssmatbas",1,"(2014)MATEMÁTICA BÁSICA I","(2009)MATEMÁTICA BÁSICA I" ,"lcachi","CACHI MONTOYA LUIS","lcachi","CACHI MONTOYA LUIS","dmorales","DENIS MORALES RETAMOZO"));
+                set(new Grupo("ssmatbas1g1tp","SS",1,"P","ssmatbas",1,"MATEMATICA BASICA I","(2014)MATEMATICA BASICA I","(2009)MATEMATICA BASICA I" ,"lcachi","CACHI MONTOYA LUIS","lcachi","CACHI MONTOYA LUIS","dmorales","DENIS MORALES RETAMOZO"));
 
-        db.collection("grupos").document("sseticprog1tt").
-                set(new Grupo("sseticprog1tt","SS",1,"T","sseticpro",1,"(2014) ÉTICA DE LA PROFESIÓN","" ,"cmora","CARLOS ABEL MORA ZAVALA","cmora","CARLOS ABEL MORA ZAVALA","dmorales","DENIS MORALES RETAMOZO"));
-        db.collection("grupos").document("sseticprog1tp").
-                set(new Grupo("sseticprog1tp","SS",1,"P","sseticpro",1,"(2014) ÉTICA DE LA PROFESIÓN","" ,"cmora","CARLOS ABEL MORA ZAVALA","cmora","CARLOS ABEL MORA ZAVALA","dmorales","DENIS MORALES RETAMOZO"));
+        db.collection("grupos").document("sweticprog1tt").
+                set(new Grupo("sweticprog1tt","SW",1,"T","sweticpro",1,"ETICA DE LA PROFESION","(2014) ETICA DE LA PROFESION","" ,"cmora","CARLOS ABEL MORA ZAVALA","cmora","CARLOS ABEL MORA ZAVALA","dmorales","DENIS MORALES RETAMOZO"));
+        db.collection("grupos").document("sweticprog1tp").
+                set(new Grupo("sweticprog1tp","SW",1,"P","sweticpro",1,"ETICA DE LA PROFESION","(2014) ETICA DE LA PROFESION","" ,"cmora","CARLOS ABEL MORA ZAVALA","cmora","CARLOS ABEL MORA ZAVALA","dmorales","DENIS MORALES RETAMOZO"));
     }
 
 
