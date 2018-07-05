@@ -11,16 +11,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -41,6 +46,8 @@ public class UnidadesFragment extends Fragment {
     FirestoreRecyclerAdapter adapter;
     RecyclerView recyclerView;
     FloatingActionButton fab;
+    String TAG = "FIRESTORE";
+    Query query;
 
     public UnidadesFragment() {
         // Required empty public constructor
@@ -65,7 +72,7 @@ public class UnidadesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Query query = FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("unidades");
+        query = FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("unidades");
 
         FirestoreRecyclerOptions<Unidad> options = new FirestoreRecyclerOptions.Builder<Unidad>()
                 .setQuery(query, Unidad.class).build();
@@ -93,10 +100,31 @@ public class UnidadesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(context, UnidadActivity.class);
-                intent.putExtra("numero", adapter.getItemCount() + 1);
-                intent.putExtra("curso", idCurso);
-                startActivity(intent);
+                query.get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    int numeroSemanas = 0;
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        Unidad unidad = document.toObject(Unidad.class);
+                                        numeroSemanas = numeroSemanas + unidad.getSemanas();
+                                    }
+                                    if(numeroSemanas < 14){
+                                        Intent intent =  new Intent(context, UnidadActivity.class);
+                                        intent.putExtra("numero", adapter.getItemCount() + 1);
+                                        intent.putExtra("curso", idCurso);
+                                        startActivity(intent);
+                                    }else{
+                                        Toast.makeText(context, "YA SE COMPLETO EL MAXIMO DE SEMANAS: 14", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+
             }
         });
 

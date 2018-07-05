@@ -11,11 +11,13 @@ import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -34,7 +36,8 @@ public class UnidadActivity extends AppCompatActivity {
 
     TextView txtNumero;
     TextInputEditText edtNombre;
-    TextInputEditText edtSemanas;
+//    TextInputEditText edtSemanas;
+    NumberPicker numberPicker;
     Button btnRegistrar;
     String idCurso;
     final String TAG = "FIRESTORE";
@@ -51,13 +54,34 @@ public class UnidadActivity extends AppCompatActivity {
 
         txtNumero = (TextView) findViewById(R.id.registrar_unidad_txtNumero);
         edtNombre = (TextInputEditText) findViewById(R.id.registrar_unidad_edtNombre);
-        edtSemanas = (TextInputEditText) findViewById(R.id.registrar_unidad_edtSemanas);
+//        edtSemanas = (TextInputEditText) findViewById(R.id.registrar_unidad_edtSemanas);
         btnRegistrar = (Button) findViewById(R.id.registrar_unidad_btnRegistrar);
+        numberPicker = (NumberPicker) findViewById(R.id.registrar_unidad_numSemanas);
 
         txtNumero.setText("REGISTRAR UNIDAD N° " + numero);
-        edtSemanas.setTransformationMethod(new NumericKeyBoardTransformationMethod());
-        edtSemanas.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
+//        edtSemanas.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+//        edtSemanas.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
         edtNombre.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30),new InputFilter.AllCaps()});
+        numberPicker.setMinValue(1);
+
+        FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("unidades")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int numeroSemanas = 0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Unidad unidad = document.toObject(Unidad.class);
+                                numeroSemanas = numeroSemanas + unidad.getSemanas();
+                            }
+                            numberPicker.setMaxValue(14-numeroSemanas);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +89,7 @@ public class UnidadActivity extends AppCompatActivity {
                     if (camposValidos()){
                         FirebaseFirestore.getInstance().collection("silabus").document(idCurso).set(new Silabus(idCurso));
                         FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("unidades").document(numero+"")
-                                .set(new Unidad(numero,edtNombre.getText().toString(),Integer.parseInt(edtSemanas.getText().toString())));
+                                .set(new Unidad(numero,edtNombre.getText().toString(), numberPicker.getValue()));
                         FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas")
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -77,7 +101,7 @@ public class UnidadActivity extends AppCompatActivity {
                                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                                 semanas.add(document.toObject(Semana.class));
                                             }
-                                            int num = Integer.parseInt(edtSemanas.getText().toString());
+                                            int num = numberPicker.getValue();
                                             for (int i = 1; i <= num; i++) {
                                                 int n = semanas.size() + i;
                                                 if (n > 7) n++;
@@ -102,14 +126,13 @@ public class UnidadActivity extends AppCompatActivity {
 
     public boolean camposValidos(){
         boolean valido1 = true, valido2= true;
-        if(edtSemanas.getText().toString().trim().equals("")){
-            valido1 = false;
-        }else{
-            if (edtSemanas.getText().toString().trim().equals("0")){
-                valido1 = false;
-            }
-        }
-
+//        if(edtSemanas.getText().toString().trim().equals("")){
+//            valido1 = false;
+//        }else{
+//            if (edtSemanas.getText().toString().trim().equals("0")){
+//                valido1 = false;
+//            }
+//        }
         if(edtNombre.getText().toString().trim().equals("")){
             valido2 = false;
         }

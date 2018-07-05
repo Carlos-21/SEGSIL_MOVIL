@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:text="REGISTRAR UNIDAD N°"
             android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="@dimen/layout_margin10dp"
             android:gravity="center"/>
         <LinearLayout
             android:layout_margin="@dimen/layout_margin10dp"
@@ -32,16 +33,31 @@
                     android:inputType="text"
                     android:hint="Nombre Unidad"/>
             </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+            <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<android.support.design.widget.TextInputEditText-->
+                    <!--android:id="@+id/registrar_unidad_edtSemanas"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="Numero Semanas"-->
+                    <!--android:inputType="numberPassword"/>-->
+            <!--</android.support.design.widget.TextInputLayout>-->
+            <LinearLayout
+                android:layout_marginTop="@dimen/layout_margin10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/registrar_unidad_edtSemanas"
-                    android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Numero Semanas"
-                    android:inputType="numberPassword"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:text="Número de Semanas"
+                    android:layout_marginRight="@dimen/layout_margin10dp"/>
+                <NumberPicker
+                    android:id="@+id/registrar_unidad_numSemanas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
         <Button
             android:id="@+id/registrar_unidad_btnRegistrar"

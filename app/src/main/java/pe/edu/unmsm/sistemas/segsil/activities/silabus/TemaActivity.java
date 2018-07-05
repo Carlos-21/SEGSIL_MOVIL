@@ -73,9 +73,14 @@ public class TemaActivity extends AppCompatActivity {
             public void onBindViewHolder(final TemaHolder holder, int position, final Tema model) {
                 holder.setTxtTema(model.getNumero() + "." + model.getNombre());
                 String actividades = "";
-
+                int j = 1;
                 for (String a : model.getActividades()){
-                    actividades = actividades + a + ".";
+                    if(j == 1){
+                        actividades = actividades + a ;
+                    }else{
+                        actividades = actividades + "\n" + a ;
+                    }
+                    j++;
                 }
 
                 holder.setTxtActividades(actividades);
