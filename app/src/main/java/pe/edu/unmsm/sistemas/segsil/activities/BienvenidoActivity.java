@@ -154,6 +154,12 @@ public class BienvenidoActivity extends AppCompatActivity {
                     intent.putExtra("id",idUsuario);
                     intent.putExtra("nombre", nombre);
                     intent.putExtra("apellido", apellido);
+                    if (perfil.isDecanato())
+                        intent.putExtra("perfil", Perfiles.DECANO);
+                    if (perfil.isDirector_ss())
+                        intent.putExtra("perfil", Perfiles.DIRECTOR_SISTEMAS);
+                    if (perfil.isDirector_sw())
+                        intent.putExtra("perfil", Perfiles.DIRECTOR_SOFTWARE);
                     startActivity(intent);
                 }
             }

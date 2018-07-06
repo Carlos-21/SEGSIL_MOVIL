@@ -23,4 +23,9 @@
         <item>Buscar Nombre</item>
     </string-array>
 
+    <string-array name="eaps">
+        <item>Ingeniería de Sistemas</item>
+        <item>Ingeniería de Software</item>
+    </string-array>
+
 </resources>

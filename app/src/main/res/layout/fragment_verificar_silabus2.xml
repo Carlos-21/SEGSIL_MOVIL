@@ -1,40 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context=".activities.control.MenuVerificarSilabusActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_weight="1"
-            app:navigationIcon="@drawable/btnvolver"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/app_name">
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-        </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
+    tools:context=".fragments.control.VerificarSilabusFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,36 +27,25 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/verificar_silabus_txtEscuela"
+                android:id="@+id/verificar_silabus_fragment_txtEscuela"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="Ingeniería de Sistemas"/>
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/verificar_silabus_seleccionar"
+            android:id="@+id/verificar_silabus_fragment_seleccionar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="vertical">
             <AutoCompleteTextView
-                android:id="@+id/verificar_silabus_search"
+                android:id="@+id/verificar_silabus_fragment_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Buscar..."
-                android:textSize="15sp"
-                android:theme="@style/TextInputBusqueda"/>
-            <Button
-                android:id="@+id/verificar_silabus_btnMostrarTodo"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginLeft="2dp"
-                android:textColor="@color/colorIcons"
-                android:background="@color/colorSecondaryText"
-                android:text="LIMPIAR BUSQUEDA"/>
+                android:hint="Buscar..."/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,7 +88,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/verificar_silabus_recycler"
+                android:id="@+id/verificar_silabus_fragment_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>

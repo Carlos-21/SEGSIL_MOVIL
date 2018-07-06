@@ -7,6 +7,11 @@
         android:title="@string/action_volver"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_descargar"
+        android:orderInCategory="100"
+        android:title="Descargar Silabus"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_sesion"
         android:orderInCategory="100"
         android:title="@string/action_sesion"

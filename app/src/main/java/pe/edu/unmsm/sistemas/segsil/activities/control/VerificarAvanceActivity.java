@@ -1,9 +1,13 @@
 package pe.edu.unmsm.sistemas.segsil.activities.control;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -19,8 +23,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
@@ -111,9 +120,37 @@ public class VerificarAvanceActivity extends AppCompatActivity
         }else if(id == R.id.action_sesion){
             cerrarSesion();
             return true;
+        }else if(id == R.id.action_descargar){
+            descargar();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void descargar(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        storageRef.child("silabus/" + idCurso + ".pdf").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(intent);
+                Toast.makeText(VerificarAvanceActivity.this, "Descargando...", Toast.LENGTH_SHORT).show();
+                DownloadManager.Request r = new DownloadManager.Request(uri);
+                r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "fileName");
+                r.allowScanningByMediaScanner();
+                r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                dm.enqueue(r);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Toast.makeText(VerificarAvanceActivity.this, "Error al descargar...", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

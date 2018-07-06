@@ -1,23 +1,39 @@
 package pe.edu.unmsm.sistemas.segsil.activities.silabus;
 
 import android.content.DialogInterface;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 
 import pe.edu.unmsm.sistemas.segsil.R;
+import pe.edu.unmsm.sistemas.segsil.activities.avance.RegistrarAvanceActivity;
 import pe.edu.unmsm.sistemas.segsil.fragments.silabus.ResumenFragment;
 import pe.edu.unmsm.sistemas.segsil.fragments.silabus.SemanasFragment;
 import pe.edu.unmsm.sistemas.segsil.fragments.silabus.UnidadesFragment;
+import pe.edu.unmsm.sistemas.segsil.util.FileChooser;
 
 public class RegistrarSilabusActivity extends AppCompatActivity {
     LinearLayout btnAnterior;
@@ -102,6 +118,55 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
             }
         });
         setFragment(1,1);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_silabus, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_silabus_subir:
+                FileChooser fileChooser = new FileChooser(RegistrarSilabusActivity.this);
+                fileChooser.setFileListener(new FileChooser.FileSelectedListener() {
+                    @Override
+                    public void fileSelected(File file) {
+                        String filename = file.getAbsolutePath();
+                        Log.d("File", filename);
+                        Toast.makeText(RegistrarSilabusActivity.this, "Subiendo...", Toast.LENGTH_SHORT).show();
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        StorageReference storageRef = storage.getReference();
+                        Uri uri = Uri.fromFile(file);
+                        StorageReference riversRef = storageRef.child("silabus/"+idCurso+".pdf");
+                        UploadTask uploadTask = riversRef.putFile(uri);
+
+                        // Register observers to listen for when the download is done or if it fails
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                Toast.makeText(RegistrarSilabusActivity.this, "Error al intentar subir...", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                                // ...
+                                Toast.makeText(RegistrarSilabusActivity.this, "Subida Completa...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                fileChooser.showDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void setFragment(int numeroFragment, int direccion){

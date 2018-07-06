@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/layout_margin10dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Datos del Coordinador del Curso"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/dialog_coordinador_txtNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="nombre_coordinador"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/dialog_coordinador_txtCorreo"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="correo_coordinador"/>
+    <TextView
+        android:id="@+id/dialog_coordinador_txtTelefono"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="telefono_coordinador"/>
+</LinearLayout>
