@@ -52,6 +52,7 @@ public class AvanceSemanaFragment extends Fragment {
     int numeroSemana;
     TextView txtCurso;
     TextView txtGrupoTipo;
+    TextView txtSemana;
     LinearLayout checklist1;
     LinearLayout checklist2;
     LinearLayout layoutChecklist1;
@@ -87,6 +88,7 @@ public class AvanceSemanaFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_avance_semana, container, false);
         txtCurso = (TextView) rootView.findViewById(R.id.fragment_avance_txtCurso);
         txtGrupoTipo = (TextView) rootView.findViewById(R.id.fragment_avance_txtGrupoTipo);
+        txtSemana = (TextView) rootView.findViewById(R.id.fragment_avance_txtSemana);
         layoutChecklist1 = (LinearLayout) rootView.findViewById(R.id.fragment_avance_layout_tema1);
         layoutChecklist2 = (LinearLayout) rootView.findViewById(R.id.fragment_avance_layout_tema2);
         checklist1 = (LinearLayout) rootView.findViewById(R.id.registrar_avance_checklist1);
@@ -122,6 +124,8 @@ public class AvanceSemanaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        txtSemana.setText("SEMANA " + numeroSemana);
+
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("grupos").document(idGrupo);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -64,13 +65,14 @@ public class ActividadesActivity extends AppCompatActivity {
         btnGuardar = (Button) findViewById(R.id.registrar_tema_actividades_btnGuardar);
 
         setSupportActionBar(toolbar);
+        toolbar.setSubtitle("SEMANA " + numeroSemana);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
+        
         edtNombre.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(30)});
         edtNombre.setOnKeyListener(new View.OnKeyListener() {
             @Override

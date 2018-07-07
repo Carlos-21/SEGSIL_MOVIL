@@ -270,21 +270,95 @@ public class VerificarAvanceFragment extends Fragment {
                 .collection("semanas").document(numeroSemana+"")
                 .collection("temas").document("1")
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Tema tema = documentSnapshot.toObject(Tema.class);
+                        if (tema != null){
+                            layoutChecklist1.setVisibility(View.VISIBLE);
+                            txtTema1.setText("TEMA 1: " + tema.getNombre());
+                            LinearLayout[] linearLayouts1 = {l1lyt1,l1lyt2,l1lyt3,l1lyt4,l1lyt5,l1lyt6,l1lyt7,l1lyt8,l1lyt9,l1lyt10};
+                            TextView[] textViews = {txt1Actividad1,txt1Actividad2,txt1Actividad3,txt1Actividad4,txt1Actividad5,txt1Actividad6,
+                                    txt1Actividad7,txt1Actividad8,txt1Actividad9,txt1Actividad10};
+                            for (int i = 0; i < tema.getActividades().size(); i++) {
+                                String actividad = tema.getActividades().get(i);
+                                linearLayouts1[i].setVisibility(View.VISIBLE);
+                                textViews[i].setText(actividad);
+                            }
+                            String idRespuestas = idGrupo+"_s"+numeroSemana+"_t1";
+                            FirebaseFirestore.getInstance().collection("respuestas_profesores").document(idRespuestas)
+                                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Respuestas respuestas = documentSnapshot.toObject(Respuestas.class);
+                                    if (respuestas != null){
+                                        for (int i = 0; i < respuestas.getRespuestas().size(); i++) {
+                                            boolean respuesta = respuestas.getRespuestas().get(i);
+                                            CheckBox[] checkBoxesProfesor = {cl1ckp1, cl1ckp2, cl1ckp3, cl1ckp4, cl1ckp5, cl1ckp6, cl1ckp7, cl1ckp8, cl1ckp9, cl1ckp10};
+                                            if (respuesta) checkBoxesProfesor[i].setChecked(true);
+                                            else checkBoxesProfesor[i].setChecked(false);
+                                        }
+                                    }
+                                }
+                            });
+
+                            FirebaseFirestore.getInstance().collection("respuestas_delegados").document(idRespuestas)
+                                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Respuestas respuestas = documentSnapshot.toObject(Respuestas.class);
+                                    if (respuestas != null){
+                                        for (int i = 0; i < respuestas.getRespuestas().size(); i++) {
+                                            boolean respuesta = respuestas.getRespuestas().get(i);
+                                            CheckBox[] checkBoxesDelegado = {cl1ckd1, cl1ckd2, cl1ckd3, cl1ckd4, cl1ckd5, cl1ckd6, cl1ckd7, cl1ckd8, cl1ckd9, cl1ckd10};
+                                            if (respuesta) checkBoxesDelegado[i].setChecked(true);
+                                            else checkBoxesDelegado[i].setChecked(false);
+                                        }
+                                    }
+                                }
+                            });
+                            FirebaseFirestore.getInstance().collection("observaciones_profesores").document(idRespuestas)
+                                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Observacion observacion = documentSnapshot.toObject(Observacion.class);
+                                    if (observacion != null){
+                                        txtObservaciones1.setText("Profesor:\n" + observacion.getObservacion());
+                                    }
+                                }
+                            });
+                            FirebaseFirestore.getInstance().collection("observaciones_delegados").document(idRespuestas)
+                                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Observacion observacion = documentSnapshot.toObject(Observacion.class);
+                                    if (observacion != null){
+                                        txtObservaciones2.setText("Delegado:\n" + observacion.getObservacion());
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+        FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
+                .collection("semanas").document(numeroSemana+"")
+                .collection("temas").document("2")
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Tema tema = documentSnapshot.toObject(Tema.class);
                 if (tema != null){
-                    layoutChecklist1.setVisibility(View.VISIBLE);
-                    txtTema1.setText("TEMA 1: " + tema.getNombre());
-                    LinearLayout[] linearLayouts1 = {l1lyt1,l1lyt2,l1lyt3,l1lyt4,l1lyt5,l1lyt6,l1lyt7,l1lyt8,l1lyt9,l1lyt10};
-                    TextView[] textViews = {txt1Actividad1,txt1Actividad2,txt1Actividad3,txt1Actividad4,txt1Actividad5,txt1Actividad6,
-                            txt1Actividad7,txt1Actividad8,txt1Actividad9,txt1Actividad10};
+                    layoutChecklist2.setVisibility(View.VISIBLE);
+                    txtTema2.setText("TEMA 2: " + tema.getNombre());
+                    LinearLayout[] linearLayouts1 = {l2lyt1,l2lyt2,l2lyt3,l2lyt4,l2lyt5,l2lyt6,l2lyt7,l2lyt8,l2lyt9,l2lyt10};
+                    TextView[] textViews = {txt2Actividad1,txt2Actividad2,txt2Actividad3,txt2Actividad4,txt2Actividad5,txt2Actividad6,
+                            txt2Actividad7,txt2Actividad8,txt2Actividad9,txt2Actividad10};
                     for (int i = 0; i < tema.getActividades().size(); i++) {
                         String actividad = tema.getActividades().get(i);
                         linearLayouts1[i].setVisibility(View.VISIBLE);
                         textViews[i].setText(actividad);
                     }
-                    String idRespuestas = idGrupo+"_s"+numeroSemana+"_t1";
+                    String idRespuestas = idGrupo+"_s"+numeroSemana+"_t2";
                     FirebaseFirestore.getInstance().collection("respuestas_profesores").document(idRespuestas)
                             .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -293,23 +367,15 @@ public class VerificarAvanceFragment extends Fragment {
                             if (respuestas != null){
                                 for (int i = 0; i < respuestas.getRespuestas().size(); i++) {
                                     boolean respuesta = respuestas.getRespuestas().get(i);
-                                    CheckBox[] checkBoxesProfesor = {cl1ckp1, cl1ckp2, cl1ckp3, cl1ckp4, cl1ckp5, cl1ckp6, cl1ckp7, cl1ckp8, cl1ckp9, cl1ckp10};
+                                    CheckBox[] checkBoxesProfesor = {cl2ckp1, cl2ckp2, cl2ckp3, cl2ckp4, cl2ckp5, cl2ckp6, cl2ckp7,
+                                            cl2ckp8, cl2ckp9, cl2ckp10};
                                     if (respuesta) checkBoxesProfesor[i].setChecked(true);
                                     else checkBoxesProfesor[i].setChecked(false);
                                 }
                             }
                         }
                     });
-                    FirebaseFirestore.getInstance().collection("observaciones_profesores").document(idRespuestas)
-                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Observacion observacion = documentSnapshot.toObject(Observacion.class);
-                            if (observacion != null){
-                                txtObservaciones1.setText("Profesor:\n" + observacion.getObservacion());
-                            }
-                        }
-                    });
+
                     FirebaseFirestore.getInstance().collection("respuestas_delegados").document(idRespuestas)
                             .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -318,47 +384,17 @@ public class VerificarAvanceFragment extends Fragment {
                             if (respuestas != null){
                                 for (int i = 0; i < respuestas.getRespuestas().size(); i++) {
                                     boolean respuesta = respuestas.getRespuestas().get(i);
-                                    CheckBox[] checkBoxesDelegado = {cl1ckd1, cl1ckd2, cl1ckd3, cl1ckd4, cl1ckd5, cl1ckd6, cl1ckd7, cl1ckd8, cl1ckd9, cl1ckd10};
+                                    CheckBox[] checkBoxesDelegado = {cl2ckd1, cl2ckd2, cl2ckd3, cl2ckd4, cl2ckd5, cl2ckd6, cl2ckd7,
+                                            cl2ckd8, cl2ckd9, cl2ckd10};
                                     if (respuesta) checkBoxesDelegado[i].setChecked(true);
                                     else checkBoxesDelegado[i].setChecked(false);
                                 }
                             }
                         }
                     });
-                    FirebaseFirestore.getInstance().collection("observaciones_delegados").document(idRespuestas)
-                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Observacion observacion = documentSnapshot.toObject(Observacion.class);
-                            if (observacion != null){
-                                txtObservaciones2.setText("Delegado:\n" + observacion.getObservacion());
-                            }
-                        }
-                    });
+
                 }
             }
         });
-//
-//        FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
-//                .collection("semanas").document(numeroSemana+"")
-//                .collection("temas").document("2")
-//                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                Tema tema = documentSnapshot.toObject(Tema.class);
-//                if (tema != null){
-//                    layoutChecklist2.setVisibility(View.VISIBLE);
-//                    txtTema2.setText("TEMA 2: " + tema.getNombre());
-//                    CheckBox[] checkBoxes = {cl2ck1, cl2ck2, cl2ck3, cl2ck4, cl2ck5, cl2ck6, cl2ck7, cl2ck8, cl2ck9, cl2ck10};
-//                    checkBoxes2 = new ArrayList<>();
-//                    for (int i = 0; i < tema.getActividades().size(); i++) {
-//                        String actividad = tema.getActividades().get(i);
-//                        checkBoxes[i].setVisibility(View.VISIBLE);
-//                        checkBoxes[i].setText(actividad);
-//                        checkBoxes2.add(checkBoxes[i]);
-//                    }
-//                }
-//            }
-//        });
     }
 }

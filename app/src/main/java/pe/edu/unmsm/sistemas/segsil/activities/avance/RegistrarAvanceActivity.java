@@ -144,7 +144,7 @@ public class RegistrarAvanceActivity extends AppCompatActivity
 //                startActivity(intent);
                 Toast.makeText(RegistrarAvanceActivity.this, "Descargando...", Toast.LENGTH_SHORT).show();
                 DownloadManager.Request r = new DownloadManager.Request(uri);
-                r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "fileName");
+                r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "silabus_"+nombreCurso + ".pdf");
                 r.allowScanningByMediaScanner();
                 r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
