@@ -19,10 +19,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +39,7 @@ import java.util.Map;
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.adapters.ActividadAdapter;
 
+import pe.edu.unmsm.sistemas.segsil.pojos.Actividad;
 import pe.edu.unmsm.sistemas.segsil.pojos.Tema;
 
 public class ActividadesActivity extends AppCompatActivity {
@@ -46,6 +50,9 @@ public class ActividadesActivity extends AppCompatActivity {
     ArrayList<String> actividades;
     ActividadAdapter actividadAdapter;
     String idCurso;
+    String action;
+    String nombreTema;
+    int numeroTema;
     String TAG = "FIRESTORE";
     int numeroSemana;
 
@@ -56,6 +63,9 @@ public class ActividadesActivity extends AppCompatActivity {
 
         idCurso = getIntent().getExtras().getString("idCurso");
         numeroSemana = getIntent().getExtras().getInt("numeroSemana");
+        action = getIntent().getExtras().getString("action");
+        nombreTema = getIntent().getExtras().getString("nombreTema");
+        numeroTema = getIntent().getExtras().getInt("numeroTema");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.registrar_tema_actividades_toolbar);
         edtNombre = (TextInputEditText) findViewById(R.id.registrar_tema_actividades_edtNombre);
@@ -72,7 +82,7 @@ public class ActividadesActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        
+
         edtNombre.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(30)});
         edtNombre.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -115,34 +125,64 @@ public class ActividadesActivity extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseFirestore.getInstance().collection("silabus").document(idCurso).
-                        collection("semanas").document(numeroSemana+"").
-                        collection("temas")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    List<Tema> temas = new ArrayList<>();
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        temas.add(document.toObject(Tema.class));
-                                    }
-                                    int num = temas.size() + 1;
-                                    DocumentReference documentReference = FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
+
+                if(action != null) {
+                    FirebaseFirestore.getInstance().collection("silabus").document(idCurso).
+                            collection("semanas").document(numeroSemana+"").
+                            collection("temas").document(numeroTema+"").
+                            update("nombre",edtNombre.getText().toString());
+
+                } else {
+                    FirebaseFirestore.getInstance().collection("silabus").document(idCurso).
+                            collection("semanas").document(numeroSemana+"").
+                            collection("temas")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        List<Tema> temas = new ArrayList<>();
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            temas.add(document.toObject(Tema.class));
+                                        }
+                                        int num = temas.size() + 1;
+                                        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
                                                 .collection("semanas").document(numeroSemana+"").collection("temas").document(num+"");
-                                    documentReference.set(new Tema(num, edtNombre.getText().toString(), actividades));
-                                    Map<String, Object> data = new HashMap<>();
-                                    data.put("llenado", true);
-                                    FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
-                                            .collection("semanas").document(numeroSemana+"").set(data, SetOptions.merge());
-                                } else {
-                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                        documentReference.set(new Tema(num, edtNombre.getText().toString(), actividades));
+                                        Map<String, Object> data = new HashMap<>();
+                                        data.put("llenado", true);
+                                        FirebaseFirestore.getInstance().collection("silabus").document(idCurso)
+                                                .collection("semanas").document(numeroSemana+"").set(data, SetOptions.merge());
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
                 finish();
             }
         });
+
+        if(action != null) {
+            edtNombre.setText(nombreTema);
+
+            FirebaseFirestore.getInstance().collection("silabus").document(idCurso).collection("semanas").document(numeroSemana+"").collection("temas").document(numeroTema + "").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+                        Tema tema = documentSnapshot.toObject(Tema.class);
+//                        Toast.makeText(getApplicationContext(),"Actividades" +tema.getActividades().size(), Toast.LENGTH_SHORT).show();
+
+                        if(tema.getActividades() != null) {
+                            for (String actividad : tema.getActividades()){
+                                actividades.add(actividad);
+                            }
+                            actividadAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
+        }
 
     }
     public void ocultarTeclado(View view){

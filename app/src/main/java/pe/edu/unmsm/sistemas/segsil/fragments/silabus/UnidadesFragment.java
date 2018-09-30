@@ -79,10 +79,24 @@ public class UnidadesFragment extends Fragment {
 
         adapter = new FirestoreRecyclerAdapter<Unidad, UnidadHolder>(options) {
             @Override
-            public void onBindViewHolder(UnidadHolder holder, int position, Unidad model) {
+            public void onBindViewHolder(UnidadHolder holder, int position, final Unidad model) {
                 holder.setNombre(model.getNombre());
                 holder.setNumero(model.getNumero() + "");
                 holder.setSemanas(model.getSemanas() + "");
+                holder.getCardView().setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Intent intent =  new Intent(context, UnidadActivity.class);
+                        intent.putExtra("numero", model.getNumero());
+                        intent.putExtra("curso", idCurso);
+                        intent.putExtra("nombre", model.getNombre());
+                        intent.putExtra("semanas", model.getSemanas());
+                        intent.putExtra( "action", "update");
+                        startActivity(intent);
+                        return false;
+                    }
+                });
+
             }
 
             @Override

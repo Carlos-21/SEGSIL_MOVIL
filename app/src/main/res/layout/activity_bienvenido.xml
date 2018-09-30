@@ -10,10 +10,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4">
+            android:layout_weight="2">
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -89,20 +91,23 @@
                         />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="bottom|center">
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="5"/>
+                    android:layout_weight="5" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2"
-                    android:src="@drawable/logo_escudo_unmsm"/>
+                    android:src="@drawable/logo_escudo_unmsm" />
             </LinearLayout>
 
         </FrameLayout>
@@ -110,10 +115,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
+            android:layout_weight="3"
+            android:orientation="vertical"
             android:gravity="top"
-            android:layout_margin="@dimen/margin_material"
-            android:orientation="vertical">
+            android:layout_marginLeft="@dimen/margin_material"
+            android:layout_marginRight="@dimen/margin_material"
+            android:layout_marginBottom="@dimen/margin_material">
+
             <TextView
                 android:id="@+id/bienvenido_txtCargando"
                 android:layout_width="match_parent"
@@ -134,162 +142,177 @@
                     android:gravity="center"
                     android:text="Bienvenido"/>
             </LinearLayout>
-            <android.support.v7.widget.CardView
-                android:id="@+id/bienvenido_cvGestionarUsuarios"
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:focusable="true"
-                android:clickable="true"
-                android:visibility="gone"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_margin="5dp">
+                android:layout_height="match_parent"
+                android:gravity="center">
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_people"
-                        android:tint="@color/colorPrimaryDark"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="center_vertical"
-                        android:text="GESTIONAR USUARIOS"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/texto_chico"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/bienvenido_cvGestionarUsuarios"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_margin="5dp">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:scaleType="fitCenter"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_people"
+                                android:tint="@color/colorPrimaryDark"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                android:gravity="center_vertical"
+                                android:text="GESTIONAR USUARIOS"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/texto_chico"/>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/bienvenido_cvVerificarAvance"
+                        android:layout_width="match_parent"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:scaleType="fitCenter"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:src="@drawable/baseline_assessment_black_48"
+                                android:tint="@color/colorPrimaryDark"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                android:gravity="center_vertical"
+                                android:text="VERIFICAR AVANCE"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/texto_chico"/>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/bienvenido_cvVerificarSilabus"
+                        android:layout_width="match_parent"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:scaleType="fitCenter"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_insert_drive_file"
+                                android:tint="@color/colorPrimaryDark"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                android:gravity="center_vertical"
+                                android:text="VERIFICAR SILABUS"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/texto_chico"/>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/bienvenido_cvRegistrarSilabus"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_margin="5dp">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:scaleType="fitCenter"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:src="@drawable/baseline_book_black_48"
+                                android:tint="@color/colorPrimaryDark"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                android:gravity="center_vertical"
+                                android:text="REGISTRAR SILABUS"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/texto_chico"/>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/bienvenido_cvRegistrarAvance"
+                        android:layout_width="match_parent"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:scaleType="fitCenter"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:src="@drawable/baseline_done_all_black_48"
+                                android:tint="@color/colorPrimaryDark"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                android:gravity="center_vertical"
+                                android:text="REGISTRAR AVANCE"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/texto_chico"/>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/bienvenido_cvVerificarAvance"
-                android:layout_width="match_parent"
-                android:focusable="true"
-                android:clickable="true"
-                android:visibility="gone"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_height="50dp"
-                android:layout_margin="5dp">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:src="@drawable/baseline_assessment_black_48"
-                        android:tint="@color/colorPrimaryDark"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="center_vertical"
-                        android:text="VERIFICAR AVANCE"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/texto_chico"/>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/bienvenido_cvVerificarSilabus"
-                android:layout_width="match_parent"
-                android:focusable="true"
-                android:clickable="true"
-                android:visibility="gone"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_height="50dp"
-                android:layout_margin="5dp">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_insert_drive_file"
-                        android:tint="@color/colorPrimaryDark"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="center_vertical"
-                        android:text="VERIFICAR SILABUS"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/texto_chico"/>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/bienvenido_cvRegistrarSilabus"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:focusable="true"
-                android:clickable="true"
-                android:visibility="gone"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_margin="5dp">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:src="@drawable/baseline_book_black_48"
-                        android:tint="@color/colorPrimaryDark"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="center_vertical"
-                        android:text="REGISTRAR SILABUS"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/texto_chico"/>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/bienvenido_cvRegistrarAvance"
-                android:layout_width="match_parent"
-                android:focusable="true"
-                android:clickable="true"
-                android:visibility="gone"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_height="50dp"
-                android:layout_margin="5dp">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:src="@drawable/baseline_done_all_black_48"
-                        android:tint="@color/colorPrimaryDark"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="center_vertical"
-                        android:text="REGISTRAR AVANCE"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/texto_chico"/>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </ScrollView>
+
 
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

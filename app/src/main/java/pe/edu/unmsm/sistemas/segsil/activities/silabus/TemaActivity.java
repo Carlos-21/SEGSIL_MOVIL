@@ -82,12 +82,22 @@ public class TemaActivity extends AppCompatActivity {
                     }
                     j++;
                 }
-
                 holder.setTxtActividades(actividades);
-                holder.getCv().setOnClickListener(new View.OnClickListener() {
+                holder.getCv().setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public boolean onLongClick(View view) {
+                        Toast.makeText(getApplicationContext(),model.getNombre() +" , "+ model.getNumero()+ " , " +model.getActividades().size(), Toast.LENGTH_SHORT).show();
 
+                        Intent intent = new Intent(TemaActivity.this, ActividadesActivity.class);
+                        intent.putExtra("idCurso",idCurso);
+                        intent.putExtra("numeroSemana",numero);
+                        intent.putExtra("action","update");
+                        intent.putExtra("nombreTema",model.getNombre());
+                        intent.putExtra("numeroTema",model.getNumero());
+                        Toast.makeText(getApplicationContext(),"Numero TEMA: " +intent.getStringExtra("numeroTema"), Toast.LENGTH_SHORT).show();
+
+                        startActivity(intent);
+                        return true;
                     }
                 });
             }

@@ -23,6 +23,10 @@ public class TemaHolder extends RecyclerView.ViewHolder{
         return cv;
     }
 
+    public void setCv(CardView cv) {
+        this.cv = cv;
+    }
+
     public void setTxtTema(String s) {
         txtTema.setText(s);
     }

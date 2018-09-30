@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import pe.edu.unmsm.sistemas.segsil.R;
+import pe.edu.unmsm.sistemas.segsil.activities.admin.AdminActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.avance.MenuAvanceActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.control.MenuVerificarAvanceActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.control.MenuVerificarSilabusActivity;
@@ -32,7 +33,7 @@ import pe.edu.unmsm.sistemas.segsil.pojos.Usuario;
 public class BienvenidoActivity extends AppCompatActivity {
 
     private ImageView btnCerrarSesion;
-//    private CardView cvGestionarUsuarios;
+    private CardView cvGestionarUsuarios;
     private CardView cvRegistrarSilabus;
     private CardView cvRegistrarAvance;
     private CardView cvVerificarAvance;
@@ -64,7 +65,7 @@ public class BienvenidoActivity extends AppCompatActivity {
         cvVerificarAvance = (CardView) findViewById(R.id.bienvenido_cvVerificarAvance);
         cvVerificarSilabus = (CardView) findViewById(R.id.bienvenido_cvVerificarSilabus);
 
-//        cvGestionarUsuarios = (CardView) findViewById(R.id.bienvenido_cvGestionarUsuarios);
+        cvGestionarUsuarios = (CardView) findViewById(R.id.bienvenido_cvGestionarUsuarios);
 //
         cvRegistrarAvance = (CardView) findViewById(R.id.bienvenido_cvRegistrarAvance);
         cvRegistrarSilabus = (CardView) findViewById(R.id.bienvenido_cvRegistrarSilabus);
@@ -83,19 +84,20 @@ public class BienvenidoActivity extends AppCompatActivity {
             }
         });
 
-//        cvGestionarUsuarios.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(currentUser != null){
-//                    String idUsuario = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
-//                    Intent intent = new Intent(BienvenidoActivity.this, AdminActivity.class);
-//                    intent.putExtra("id",idUsuario);
-//                    intent.putExtra("nombre",nombre);
-//                    intent.putExtra("apellido",apellido);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        cvGestionarUsuarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentUser != null){
+                    String idUsuario = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
+                    Intent intent = new Intent(BienvenidoActivity.this, AdminActivity.class);
+                    intent.putExtra("id",idUsuario);
+                    intent.putExtra("nombre",nombre);
+                    intent.putExtra("apellido",apellido);
+                    startActivity(intent);
+                }
+            }
+        });
+
         cvRegistrarSilabus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,9 +183,10 @@ public class BienvenidoActivity extends AppCompatActivity {
                     txtIdUsuario.setText(idUsuario);
                     txtIdUsuario.setText(idUsuario);
                     if(perfil.isAdministrador()){
-                        cvRegistrarSilabus.setVisibility(View.VISIBLE);
-                        cvRegistrarAvance.setVisibility(View.VISIBLE);
-                        cvVerificarAvance.setVisibility(View.VISIBLE);
+                        cvGestionarUsuarios.setVisibility(View.VISIBLE);
+//                        cvRegistrarSilabus.setVisibility(View.VISIBLE);
+//                        cvRegistrarAvance.setVisibility(View.VISIBLE);
+//                        cvVerificarAvance.setVisibility(View.VISIBLE);
                     }
                     if(perfil.isDecanato() || perfil.isDirector_ss() || perfil.isDirector_sw()){
                         cvVerificarAvance.setVisibility(View.VISIBLE);
@@ -228,7 +231,7 @@ public class BienvenidoActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
         if (keyCode == event.KEYCODE_BACK) {
-           cerrarSesion();
+            cerrarSesion();
         }
         return super.onKeyDown(keyCode, event);
     }

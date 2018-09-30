@@ -31,4 +31,12 @@ public class UnidadHolder extends RecyclerView.ViewHolder{
     public void setSemanas(String s) {
         semanas.setText(s);
     }
+
+    public CardView getCardView() {
+        return cardView;
+    }
+
+    public void setCardView(CardView cardView) {
+        this.cardView = cardView;
+    }
 }
