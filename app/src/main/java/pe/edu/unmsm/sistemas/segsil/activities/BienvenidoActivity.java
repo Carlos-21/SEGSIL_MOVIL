@@ -212,8 +212,23 @@ public class BienvenidoActivity extends AppCompatActivity {
     }
 
     public void cerrarSesion(){
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("¿DESEA CERRAR SESIÓN Y SALIR DE LA APP?");
+//        builder.setNegativeButton("CANCELAR", null);
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @SuppressLint("NewApi")
+//            public void onClick(DialogInterface dialog, int id) {
+//                firebaseAuth.getInstance().signOut();
+//                finishAffinity();
+//                dialog.dismiss();
+//            }
+//        });
+//        final AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
+
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("¿DESEA CERRAR SESIÓN Y SALIR DE LA APP?");
+        builder.setMessage("¿DESEA CERRAR SESIÓN?");
         builder.setNegativeButton("CANCELAR", null);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @SuppressLint("NewApi")
@@ -221,6 +236,9 @@ public class BienvenidoActivity extends AppCompatActivity {
                 firebaseAuth.getInstance().signOut();
                 finishAffinity();
                 dialog.dismiss();
+                Intent intent = new Intent(BienvenidoActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         final AlertDialog alertDialog = builder.create();
