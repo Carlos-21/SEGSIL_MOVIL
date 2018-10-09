@@ -3,6 +3,8 @@ package pe.edu.unmsm.sistemas.segsil.activities;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(isConnected()){
+            cargarDialogoConectado();
+            Log.v("NETWORK","TIENE CONEXION A INTERNET");
+        }else{
+            cargarDialogoNoConectado();
+            Log.v("NETWORK","NO TIENE CONEXION A INTERNET");
+        }
+
         btnIngresar = (Button) findViewById(R.id.login_btnIngresar);
         edtPassword = (TextInputEditText) findViewById(R.id.login_edtPassword);
         edtUsuario = (TextInputEditText) findViewById(R.id.login_edtUsuario);
@@ -56,6 +66,53 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+    //Metodo para verificar si nuestro movil esta conectado a internet
+    //----------------------------------------------------------------------------------------------
+    public boolean isConnected(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+        if(netinfo!=null &&  netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if ((wifi != null && wifi.isConnectedOrConnecting()) || (mobile != null && mobile.isConnectedOrConnecting()))
+                return true;
+            else
+                return false;
+        }else {
+            return false;
+        }
+    }
+
+    private void cargarDialogoConectado(){
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(LoginActivity.this);
+        dialogo.setTitle("Verificando Conexion");
+        dialogo.setMessage("Tiene conexion a Internet" + '\n' + "Presione OK para Continuar");
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialogo.show();
+    }
+
+    private void cargarDialogoNoConectado() {
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(LoginActivity.this);
+        dialogo.setTitle("Verificando Conexion");
+        dialogo.setMessage("No tiene conexion a Internet" + '\n' + "Presione OK para Salir");
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.exit(0);
+            }
+        });
+        dialogo.show();
+    }
+    //----------------------------------------------------------------------------------------------
+
 
     public void iniciarSesion(String usuario, String password){
         firebaseAuth.signInWithEmailAndPassword(usuario+"@sistemas.edu.pe",password)
