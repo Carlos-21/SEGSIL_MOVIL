@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.silabus.PantallaCoordinador">
+    <include layout="@layout/toolbar_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/logo_segsil"
+            android:tint="@color/colorIcons"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SEGSIL"
+            android:textColor="@color/colorIcons"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sistema de Seguimiento de Silabus"
+            android:textColor="@color/colorIcons"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_Bienvenido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Bienvenido"
+            android:textSize="15dp"
+            android:layout_marginBottom="30dp"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            >
+
+            <Button
+                android:id="@+id/btn_Unidades"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/layout_margin10dp"
+                android:layout_marginTop="@dimen/layout_margin20dp"
+                android:text="UNIDADES"
+                android:background="@color/colorPrimaryLight"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_Semanas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="SEMANAS"
+                android:gravity="center"
+                android:background="@color/colorPrimaryLight"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/layout_margin10dp"
+                android:layout_marginTop="@dimen/layout_margin20dp"/>
+
+            <Button
+                android:id="@+id/btn_Resumen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="RESUMEN"
+                android:gravity="center"
+                android:background="@color/colorPrimaryLight"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/layout_margin10dp"
+                android:layout_marginTop="@dimen/layout_margin20dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

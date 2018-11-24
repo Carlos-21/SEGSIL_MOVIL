@@ -46,7 +46,8 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
     FirebaseFirestore db;
     String idCurso;
     String nombreCurso;
-    int fragmentActual = 1;
+    int vista_fragment;
+    int fragmentActual;
 
 
     @Override
@@ -66,8 +67,12 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         idCurso = bundle.getString("id_curso");
         nombreCurso = bundle.getString("nombre_curso");
-        setSupportActionBar(toolbar);
+        vista_fragment = bundle.getInt("fragment");
+        fragmentActual = vista_fragment;
 
+        Log.v("Fragment", "El valor del fragment es : "+fragmentActual);
+
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setCustomView(R.layout.action_bar_title_layout);
@@ -84,7 +89,7 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(RegistrarSilabusActivity.this);
+                /*final AlertDialog.Builder builder = new AlertDialog.Builder(RegistrarSilabusActivity.this);
                 builder.setMessage("¿DESEA SALIR DEL PROCESO DE REGISTRO DE SILABUS?");
                 builder.setNegativeButton("NO", null);
                 builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
@@ -94,7 +99,8 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
                     }
                 });
                 final AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                alertDialog.show();*/
+                onBackPressed();
             }
         });
 
@@ -117,7 +123,8 @@ public class RegistrarSilabusActivity extends AppCompatActivity {
                 }
             }
         });
-        setFragment(1,1);
+
+        setFragment(fragmentActual,1);
     }
 
     @Override

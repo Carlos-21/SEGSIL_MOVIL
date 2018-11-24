@@ -9,7 +9,7 @@ import pe.edu.unmsm.sistemas.segsil.R;
 
 public class CursoSilabusHolder extends RecyclerView.ViewHolder{
     private CardView cardView;
-    private TextView txtEap;
+    private TextView txtCiclo;
     private TextView txtNombreCurso;
     private TextView txtNombreCoordinador;
 
@@ -17,7 +17,7 @@ public class CursoSilabusHolder extends RecyclerView.ViewHolder{
     public CursoSilabusHolder(View itemView) {
         super(itemView);
         cardView = (CardView) itemView.findViewById(R.id.item_curso_silabus_cv);
-        txtEap = (TextView) itemView.findViewById(R.id.item_curso_silabus_txtEap);
+        txtCiclo= (TextView) itemView.findViewById(R.id.item_curso_silabus_txtCiclo);
         txtNombreCurso = (TextView) itemView.findViewById(R.id.item_curso_silabus_txtCurso);
         txtNombreCoordinador = (TextView) itemView.findViewById(R.id.item_curso_silabus_txtCoordinador);
     }
@@ -28,8 +28,8 @@ public class CursoSilabusHolder extends RecyclerView.ViewHolder{
     public void setHolderTxtNombreCoordinador(String s){
         txtNombreCoordinador.setText(s);
     }
-    public void setHolderTxtEap(String s){
-        txtEap.setText(s);
+    public void setHolderTxtCiclo(String s){
+        txtCiclo.setText(s);
     }
 
     public CardView getCardView() {
@@ -40,3 +40,4 @@ public class CursoSilabusHolder extends RecyclerView.ViewHolder{
         this.cardView = cardView;
     }
 }
+

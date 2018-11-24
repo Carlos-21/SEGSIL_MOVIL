@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/layout_margin5dp">
         <TextView
-            android:id="@+id/item_curso_silabus_txtEap"
+            android:id="@+id/item_curso_silabus_txtCiclo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

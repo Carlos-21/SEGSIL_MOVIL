@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.content.Context;
@@ -39,11 +40,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,20 +60,22 @@ import pe.edu.unmsm.sistemas.segsil.pojos.Persona;
 
 public class MenuVerificarSilabusActivity extends AppCompatActivity {
 
-    String idUsuario;
+    String idUsuario, mensaje = "";
     int perfil;
     Query query;
+
     FirestoreRecyclerAdapter adapter;
     FirestoreRecyclerOptions<Curso> opciones;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
+
     RecyclerView recyclerView;
-    String TAG = "FIRESTORE";
-    Button mostrarTodo;
+    String TAG = "SEGUIMIENTO -->";
 
+    Button btn_descargar, mostrarTodo ;
     AutoCompleteTextView busqueda;
+    TextView txt_escuela;
     LinearLayout lytSeleccionar;
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -80,21 +86,24 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        //Recuperar datos del anterior activity
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            idUsuario = bundle.getString("id");
+            perfil = bundle.getInt("perfil");
+        }
 
         recyclerView = (RecyclerView) findViewById(R.id.verificar_silabus_recycler);
         busqueda = (AutoCompleteTextView)findViewById(R.id.verificar_silabus_search);
         lytSeleccionar = (LinearLayout) findViewById(R.id.verificar_silabus_seleccionar);
         mostrarTodo = (Button) findViewById(R.id.verificar_silabus_btnMostrarTodo);
+        txt_escuela = (TextView) findViewById(R.id.txt_escuela) ;
+        btn_descargar = (Button)findViewById(R.id.btn_Descargar);
 
-        Bundle bundle = getIntent().getExtras();
-        idUsuario = bundle.getString("id");
-        perfil = bundle.getInt("perfil");
+        firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        busqueda.setFilters(new InputFilter[]{new InputFilter.LengthFilter(40),new InputFilter.AllCaps()});
-
-        // Setup spinner
+        // Definir Opciones del Spinner (Escuelas)
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(new MyAdapter(
                 toolbar.getContext(),
@@ -103,7 +112,6 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                         "Ingeniería de Software (SW)"
                 }));
 
-
         mostrarTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,10 +119,12 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                 int position = spinner.getSelectedItemPosition();
                 switch (position){
                     case 0:
-                        query = db.collection("cursos").whereEqualTo("eap", "SS");cargarRecycler();
+                        query = db.collection("cursos").orderBy("ciclo").whereEqualTo("eap", "SS");
+                        cargarRecycler();
                         break;
                     case 1:
-                        query = db.collection("cursos").whereEqualTo("eap", "SW");cargarRecycler();
+                        query = db.collection("cursos").orderBy("ciclo").whereEqualTo("eap", "SW");
+                        cargarRecycler();
                         break;
                 }
             }
@@ -126,7 +136,8 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         Toast.makeText(MenuVerificarSilabusActivity.this, "Sistemas", Toast.LENGTH_SHORT).show();
-                        query = db.collection("cursos").whereEqualTo("eap", "SS");cargarRecycler();
+                        txt_escuela.setText("SISTEMAS");
+                        query = db.collection("cursos").orderBy("ciclo").whereEqualTo("eap", "SS");cargarRecycler();
                         query.get()
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
@@ -147,7 +158,8 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                         break;
                     case 1:
                         Toast.makeText(MenuVerificarSilabusActivity.this, "Software", Toast.LENGTH_SHORT).show();
-                        query = db.collection("cursos").whereEqualTo("eap", "SW");cargarRecycler();
+                        txt_escuela.setText("SOFTWARE");
+                        query = db.collection("cursos").orderBy("ciclo").whereEqualTo("eap", "SW");cargarRecycler();
                         query.get()
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
@@ -180,7 +192,7 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        busqueda.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*busqueda.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(perfil == Perfiles.DECANO) {
@@ -199,12 +211,16 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                 ocultarTeclado(lytSeleccionar);
                 lytSeleccionar.requestFocus();
             }
-        });
-        if(perfil == Perfiles.DECANO) {query = db.collection("cursos");}
-        else if (perfil == Perfiles.DIRECTOR_SISTEMAS) {
+        });*/
+
+
+        if(perfil == Perfiles.DECANO) {
+            query = db.collection("cursos").orderBy("ciclo");
+        }else
+        if (perfil == Perfiles.DIRECTOR_SISTEMAS) {
             spinner.setSelection(0);
             spinner.setEnabled(false);
-            query = db.collection("cursos").whereEqualTo("eap", "SS");
+            query = db.collection("cursos").orderBy("ciclo").whereEqualTo("eap", "SS");
             query.get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -223,10 +239,11 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                             }
                         }
                     });
-        } else if (perfil == Perfiles.DIRECTOR_SOFTWARE){
+        } else
+        if (perfil == Perfiles.DIRECTOR_SOFTWARE){
             spinner.setSelection(1);
             spinner.setEnabled(false);
-            query = db.collection("cursos").whereEqualTo("eap", "SW");
+            query = db.collection("cursos").orderBy("ciclo").whereEqualTo("eap", "SW");
             query.get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -251,18 +268,22 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
             @Override
             public void onBindViewHolder(CursoSilabusHolder holder, int position, Curso model) {
                 final Curso g = model;
-                holder.setHolderTxtEap(model.getEap().toString());
+                holder.setHolderTxtCiclo("" + g.getCiclo());
                 holder.setHolderTxtNombreCurso(model.getNombreCurso());
                 holder.setHolderTxtNombreCoordinador(model.getNombreCoordinador());
                 holder.getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (g.isSilabus()){
-                            Intent intent = new Intent(MenuVerificarSilabusActivity.this,VerificarSilabusActivity.class);
+                            //Intent intent = new Intent(MenuVerificarSilabusActivity.this,VerificarSilabusActivity.class);
+                            Intent intent = new Intent(MenuVerificarSilabusActivity.this,DetalleCurso.class);
                             intent.putExtra("idCurso", g.getId());
                             startActivity(intent);
                         }else{
-                            mostrarDatosCoordinador(g.getIdCoordinador());
+                            //mostrarDatosCoordinador(g.getIdCoordinador());
+                            Intent intent = new Intent(MenuVerificarSilabusActivity.this,DetalleCurso.class);
+                            intent.putExtra("idCurso", g.getId());
+                            startActivity(intent);
                         }
                     }
                 });
@@ -278,14 +299,14 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
     }
 
+    /*
     public void ocultarTeclado(View view){
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-
+    }*/
 
     private static class MyAdapter extends ArrayAdapter<String> implements ThemedSpinnerAdapter {
         private final ThemedSpinnerAdapter.Helper mDropDownHelper;
@@ -330,18 +351,23 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
             @Override
             public void onBindViewHolder(CursoSilabusHolder holder, int position, Curso model) {
                 final Curso g = model;
-                holder.setHolderTxtEap(model.getEap().toString());
+                holder.setHolderTxtCiclo("" + g.getCiclo());
                 holder.setHolderTxtNombreCurso(model.getNombreCurso());
                 holder.setHolderTxtNombreCoordinador(model.getNombreCoordinador());
                 holder.getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (g.isSilabus()){
-                            Intent intent = new Intent(MenuVerificarSilabusActivity.this,VerificarSilabusActivity.class);
+                            //Intent intent = new Intent(MenuVerificarSilabusActivity.this,VerificarSilabusActivity.class);
+                            Intent intent = new Intent(MenuVerificarSilabusActivity.this,DetalleCurso.class);
                             intent.putExtra("idCurso", g.getId());
+                            intent.putExtra("idCoordinador",g.getIdCoordinador());
                             startActivity(intent);
                         }else{
-                            mostrarDatosCoordinador(g.getIdCoordinador());
+                            //mostrarDatosCoordinador(g.getIdCoordinador());
+                            Intent intent = new Intent(MenuVerificarSilabusActivity.this,DetalleCurso.class);
+                            intent.putExtra("idCurso", g.getId());
+                            startActivity(intent);
                         }
                     }
                 });
@@ -373,7 +399,7 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
         adapter.stopListening();
     }
 
-    public void mostrarDatosCoordinador(String idCoordinador){
+    /*public void mostrarDatosCoordinador(String idCoordinador){
         DocumentReference docRef = db.collection("personas").document(idCoordinador);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -398,6 +424,6 @@ public class MenuVerificarSilabusActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }*/
 
-    }
 }

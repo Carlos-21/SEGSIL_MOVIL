@@ -29,7 +29,7 @@
 
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.v7.widget.Toolbar>
@@ -54,16 +54,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
-                android:text="CURSOS PROGRAMADOS"
+                android:text="LISTA DE CURSOS"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/verificar_silabus_txtEscuela"
+                android:id="@+id/txt_escuela"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
-                android:text="Ingeniería de Sistemas"/>
+                android:text="Sistemas"/>
         </LinearLayout>
 
         <LinearLayout
@@ -79,6 +79,7 @@
                 android:hint="Buscar..."
                 android:textSize="15sp"
                 android:theme="@style/TextInputBusqueda"/>
+
             <Button
                 android:id="@+id/verificar_silabus_btnMostrarTodo"
                 android:layout_width="match_parent"
@@ -89,6 +90,7 @@
                 android:background="@color/colorSecondaryText"
                 android:text="LIMPIAR BUSQUEDA"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -113,7 +115,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="EAP"
+                        android:text="CICLO"
                         android:textColor="@color/colorIcons"
                         android:textSize="@dimen/texto_chico" />
 
@@ -133,6 +135,16 @@
                 android:id="@+id/verificar_silabus_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_Descargar"
+                android:text="Generar Reporte"/>
         </LinearLayout>
     </LinearLayout>
 

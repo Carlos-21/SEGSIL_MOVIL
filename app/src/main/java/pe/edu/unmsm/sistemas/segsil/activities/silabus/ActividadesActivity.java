@@ -19,6 +19,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,6 +56,8 @@ public class ActividadesActivity extends AppCompatActivity {
     int numeroTema;
     String TAG = "FIRESTORE";
     int numeroSemana;
+
+    String tipo_actividad = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,16 +106,36 @@ public class ActividadesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(actividadAdapter);
 
+
+        //Registrar Actividades y segun el tipo (Teoria, Practica, Laboratorio) **********
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(ActividadesActivity.this);
                 final View dialogView = getLayoutInflater().inflate(R.layout.dialog_ingresar_actividad, null);
                 final TextInputEditText edtNombreActividad = dialogView.findViewById(R.id.dialog_actividad_edtActividad);
+                //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                final CheckBox teoria = dialogView.findViewById(R.id.tipo_teoria);
+                final CheckBox practica = dialogView.findViewById(R.id.tipo_practica);
+                final CheckBox laboratorio = dialogView.findViewById(R.id.tipo_laboratorio);
+
+                //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 builder.setView(dialogView);
                 builder.setNegativeButton("CANCELAR", null);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
+                        if(teoria.isChecked()){
+                            tipo_actividad = tipo_actividad +"-T";
+                        }
+                        if(practica.isChecked()){
+                            tipo_actividad = tipo_actividad +"-P";
+                        }
+                        if(laboratorio.isChecked()){
+                            tipo_actividad = tipo_actividad +"-L";
+                        }
+
+                        Log.v("Activivad",edtNombreActividad.getText().toString() + tipo_actividad);
                         actividades.add(edtNombreActividad.getText().toString());
                         actividadAdapter.notifyDataSetChanged();
                     }

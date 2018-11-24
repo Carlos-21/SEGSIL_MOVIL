@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/TextInputPrimary">
+
         <android.support.design.widget.TextInputEditText
             android:id="@+id/dialog_actividad_edtActividad"
             android:layout_width="match_parent"
@@ -16,5 +17,31 @@
             android:hint="ACTIVIDAD"
             android:maxLength="40"
             android:inputType="text"/>
+
     </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/tipo_teoria"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TEORIA"/>
+
+        <CheckBox
+            android:id="@+id/tipo_practica"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="PRACTICA"
+            />
+        <CheckBox
+            android:id="@+id/tipo_laboratorio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="LABORATORIO"/>
+
+    </LinearLayout>
 </LinearLayout>

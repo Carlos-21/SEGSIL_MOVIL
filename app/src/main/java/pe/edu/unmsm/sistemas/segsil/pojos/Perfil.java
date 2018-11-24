@@ -10,14 +10,14 @@ public class Perfil {
     private boolean delegado;
 
 
-    public Perfil(boolean administrador, boolean decanato, boolean director_sw, boolean director_ss, boolean coordinador, boolean profesor, boolean delegado) {
+    public Perfil(boolean administrador, boolean coordinador, boolean decanato, boolean delegado, boolean director_ss, boolean director_sw, boolean profesor ) {
         this.administrador = administrador;
-        this.decanato = decanato;
-        this.director_sw = director_sw;
-        this.director_ss = director_ss;
         this.coordinador = coordinador;
-        this.profesor = profesor;
+        this.decanato = decanato;
         this.delegado = delegado;
+        this.director_sw = director_ss;
+        this.director_ss = director_sw;
+        this.profesor = profesor;
     }
 
     public Perfil() {

@@ -1,12 +1,16 @@
 package pe.edu.unmsm.sistemas.segsil.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,13 +29,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import pe.edu.unmsm.sistemas.segsil.R;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class LoginActivity extends AppCompatActivity {
     private Button btnIngresar;
     private TextInputEditText edtUsuario;
     private TextInputEditText edtPassword;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
-    private final String TAG = "FIREBASE AUTENTICACION";
+    private final String TAG = "SEGUIMIENTO";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +47,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if(isConnected()){
-            cargarDialogoConectado();
-            Log.v("NETWORK","TIENE CONEXION A INTERNET");
+            //cargarDialogoConectado();
+            Log.v(TAG," --> Permiso, Tiene conexion a internet");
         }else{
             cargarDialogoNoConectado();
-            Log.v("NETWORK","NO TIENE CONEXION A INTERNET");
+            Log.v(TAG,"--> Permiso, NO tiene conexion a internet");
+        }
+
+        if(verificaPermiso()){
+            Toast.makeText(LoginActivity.this, "PERMISO DE LECTURA Y ESCRITURA", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(LoginActivity.this, "NO TIENE PERMISOS DE ESCRITURA NI LECTURA", Toast.LENGTH_SHORT).show();
+            Log.v(TAG," -> Permiso, NO acepto los permisos de lectura y escritura");
         }
 
         btnIngresar = (Button) findViewById(R.id.login_btnIngresar);
@@ -60,12 +75,14 @@ public class LoginActivity extends AppCompatActivity {
                     iniciarSesion(edtUsuario.getText().toString(),edtPassword.getText().toString());
                 }else{
                     Toast.makeText(LoginActivity.this, "DEBE INGRESAR LOS DATOS SOLICITADOS", Toast.LENGTH_SHORT).show();
+                    Log.v(TAG," --> ERROR EN USUARIO O CONTRASEÑA");
                 }
 
             }
         });
 
     }
+
 
     //Metodo para verificar si nuestro movil esta conectado a internet
     //----------------------------------------------------------------------------------------------
@@ -86,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void cargarDialogoConectado(){
         AlertDialog.Builder dialogo = new AlertDialog.Builder(LoginActivity.this);
-        dialogo.setTitle("Verificando Conexion");
+        //dialogo.setTitle("Verificando Conexion");
         dialogo.setMessage("Tiene conexion a Internet" + '\n' + "Presione OK para Continuar");
         dialogo.setCancelable(false);
         dialogo.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -100,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void cargarDialogoNoConectado() {
         AlertDialog.Builder dialogo = new AlertDialog.Builder(LoginActivity.this);
-        dialogo.setTitle("Verificando Conexion");
+        //dialogo.setTitle("Verificando Conexion");
         dialogo.setMessage("No tiene conexion a Internet" + '\n' + "Presione OK para Salir");
         dialogo.setCancelable(false);
         dialogo.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -114,26 +131,33 @@ public class LoginActivity extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
 
 
+
+    //Iniciar Sesion del Usuario
+    //----------------------------------------------------------------------------------------------
     public void iniciarSesion(String usuario, String password){
         firebaseAuth.signInWithEmailAndPassword(usuario+"@sistemas.edu.pe",password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            //SESION INICIADA
+                            FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
+                            String id = user.getEmail().substring(0,user.getEmail().indexOf("@"));
+                            Log.v(TAG,"--> SESION INICIADA, USUARIO: " + id );
                             sesionActiva(user);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            //ERROR AL INICIAR SESION
+                            Log.w(TAG, " --> signInWithEmail: failure " + '\n' + task.getException());
                             Toast.makeText(LoginActivity.this, "USUARIO O CONTRASEÑA INCORRECTA", Toast.LENGTH_SHORT).show();
                             sesionActiva(null);
                         }
                     }
                 });
     }
+    //----------------------------------------------------------------------------------------------
 
+    //Salir de la Aplicacion
+    //----------------------------------------------------------------------------------------------
     @SuppressLint("NewApi")
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
@@ -159,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+    //----------------------------------------------------------------------------------------------
 
     public void sesionActiva(FirebaseUser user){
         if(user != null){
@@ -174,4 +199,22 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         sesionActiva(currentUser);
     }
+
+    //Metodo para verificar solcitar permisos de lectura y escritura
+    //----------------------------------------------------------------------------------------------
+    @SuppressLint("NewApi")
+    public boolean verificaPermiso() {
+        if (checkSelfPermission(WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, "--> Permiso, Solicitar Permiso de Lectura y Escritura");
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
+            return false;
+        } else {
+            Log.v(TAG, "-> Permiso, Acepto los permisos de lectura y escritura");
+            return true;
+        }
+    }
+    //----------------------------------------------------------------------------------------------
+
 }

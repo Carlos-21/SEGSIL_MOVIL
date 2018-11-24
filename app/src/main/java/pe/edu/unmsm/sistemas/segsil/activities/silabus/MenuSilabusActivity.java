@@ -34,6 +34,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import pe.edu.unmsm.sistemas.segsil.activities.BienvenidoActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.LoginActivity;
 import pe.edu.unmsm.sistemas.segsil.holders.CursoHolder;
 import pe.edu.unmsm.sistemas.segsil.R;
@@ -53,6 +54,8 @@ public class MenuSilabusActivity extends AppCompatActivity {
     FirestoreRecyclerOptions<Curso> opciones;
     boolean acceder = true;
 
+    String nombreCoordinador, apellidoCoordinador;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +69,9 @@ public class MenuSilabusActivity extends AppCompatActivity {
         txtCoordinador = (TextView)findViewById(R.id.silabus_txtCoordinador);
 
         Bundle bundle = getIntent().getExtras();
-        txtCoordinador.setText("Coordinador: "+ bundle.getString("nombre") + " " + bundle.getString("apellido"));
+        nombreCoordinador = bundle.getString("nombre");
+        apellidoCoordinador = bundle.getString("apellido");
+        txtCoordinador.setText("Coordinador: "+ nombreCoordinador + " " + apellidoCoordinador);
         idCoordinador = bundle.getString("id");
 
         setSupportActionBar(myToolbar);
@@ -133,11 +138,15 @@ public class MenuSilabusActivity extends AppCompatActivity {
         Map<String, Object> data = new HashMap<>();
         data.put("silabus", false);
         FirebaseFirestore.getInstance().collection("cursos").document(c.getId()).set(data, SetOptions.merge());
-        Intent intent =  new Intent(MenuSilabusActivity.this,RegistrarSilabusActivity.class);
+        //Intent intent =  new Intent(MenuSilabusActivity.this,RegistrarSilabusActivity.class);
+        Intent intent =  new Intent(MenuSilabusActivity.this,PantallaCoordinador.class);
         intent.putExtra("nombre_curso",c.getNombreCurso());
         intent.putExtra("eap_curso",c.getEap());
         intent.putExtra("ciclo_curso",c.getCiclo());
         intent.putExtra("id_curso",c.getId());
+        intent.putExtra("id_coordinador",idCoordinador);
+        intent.putExtra("nombre_coordinador",nombreCoordinador);
+        intent.putExtra("apellido_coordinador", apellidoCoordinador);
         startActivity(intent);
     }
 
@@ -184,6 +193,9 @@ public class MenuSilabusActivity extends AppCompatActivity {
                 firebaseAuth.getInstance().signOut();
                 finishAffinity();
                 dialog.dismiss();
+                Intent intent = new Intent(MenuSilabusActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         final AlertDialog alertDialog = builder.create();

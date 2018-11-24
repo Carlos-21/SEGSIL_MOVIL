@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import pe.edu.unmsm.sistemas.segsil.R;
 import pe.edu.unmsm.sistemas.segsil.activities.admin.AdminActivity;
+import pe.edu.unmsm.sistemas.segsil.activities.admin.PantallaAdmin;
 import pe.edu.unmsm.sistemas.segsil.activities.avance.MenuAvanceActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.control.MenuVerificarAvanceActivity;
 import pe.edu.unmsm.sistemas.segsil.activities.control.MenuVerificarSilabusActivity;
@@ -33,24 +35,19 @@ import pe.edu.unmsm.sistemas.segsil.pojos.Usuario;
 public class BienvenidoActivity extends AppCompatActivity {
 
     private ImageView btnCerrarSesion;
-    private CardView cvGestionarUsuarios;
-    private CardView cvRegistrarSilabus;
-    private CardView cvRegistrarAvance;
-    private CardView cvVerificarAvance;
-    private CardView cvVerificarSilabus;
-    private TextView txtNombreUsuario;
-    private TextView txtIdUsuario;
-    private TextView txtCargando;
-    private String nombre;
-    private String apellido;
-    private FirebaseUser currentUser;
+    private CardView cvBaseDatos;
+    private CardView cvRegistrarSilabus, cvRegistrarAvance;
+    private CardView cvVerificarAvance, cvVerificarSilabus;
 
+    private TextView txtNombreUsuario, txtIdUsuario, txtCargando;
+    private String nombre, apellido;
+    private FirebaseUser currentUser;
 
     Perfil perfil;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
-    private final String TAG = "FIREBASE DATABASE";
 
+    private final String TAG = "SEGUIMIENTO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +58,9 @@ public class BienvenidoActivity extends AppCompatActivity {
         txtNombreUsuario = (TextView) findViewById(R.id.bienvenido_txtNombreUsuario);
         txtIdUsuario = (TextView) findViewById(R.id.bienvenido_txtIdUsuario);
         txtCargando = (TextView) findViewById(R.id.bienvenido_txtCargando);
-
         cvVerificarAvance = (CardView) findViewById(R.id.bienvenido_cvVerificarAvance);
         cvVerificarSilabus = (CardView) findViewById(R.id.bienvenido_cvVerificarSilabus);
-
-        cvGestionarUsuarios = (CardView) findViewById(R.id.bienvenido_cvGestionarUsuarios);
-//
+        cvBaseDatos = (CardView) findViewById(R.id.bienvenido_cvBaseDatos);
         cvRegistrarAvance = (CardView) findViewById(R.id.bienvenido_cvRegistrarAvance);
         cvRegistrarSilabus = (CardView) findViewById(R.id.bienvenido_cvRegistrarSilabus);
 
@@ -84,20 +78,24 @@ public class BienvenidoActivity extends AppCompatActivity {
             }
         });
 
-        cvGestionarUsuarios.setOnClickListener(new View.OnClickListener() {
+        //Muestra el modulo de Administrador
+        cvBaseDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(currentUser != null){
                     String idUsuario = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
-                    Intent intent = new Intent(BienvenidoActivity.this, AdminActivity.class);
+                    //Intent intent = new Intent(BienvenidoActivity.this, AdminActivity.class);
+                    Intent intent = new Intent(BienvenidoActivity.this, PantallaAdmin.class);
                     intent.putExtra("id",idUsuario);
                     intent.putExtra("nombre",nombre);
                     intent.putExtra("apellido",apellido);
+                    Log.v(TAG,"--> Selección: CARGA DE DATOS" );
                     startActivity(intent);
                 }
             }
         });
 
+        //Muestra el modulo de Registro de Silabus
         cvRegistrarSilabus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,10 +105,13 @@ public class BienvenidoActivity extends AppCompatActivity {
                     intent.putExtra("id",idUsuario);
                     intent.putExtra("nombre",nombre);
                     intent.putExtra("apellido",apellido);
+                    Log.v(TAG,"--> Selección: REGISTRAR SILABUS" );
                     startActivity(intent);
                 }
             }
         });
+
+        //Muestra el modulo de Registro de Avance de Silabus
         cvRegistrarAvance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +121,7 @@ public class BienvenidoActivity extends AppCompatActivity {
                     intent.putExtra("id",idUsuario);
                     intent.putExtra("nombre", nombre);
                     intent.putExtra("apellido", apellido);
+                    Log.v(TAG,"--> Selección: REGISTRAR AVANCE" );
                     if (perfil.isProfesor())
                         intent.putExtra("perfil", Perfiles.PROFESOR);
                     if (perfil.isDelegado())
@@ -128,6 +130,8 @@ public class BienvenidoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Muestra el modulo de Verificar Avance de Silabus
         cvVerificarAvance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +141,7 @@ public class BienvenidoActivity extends AppCompatActivity {
                     intent.putExtra("id",idUsuario);
                     intent.putExtra("nombre", nombre);
                     intent.putExtra("apellido", apellido);
+                    Log.v(TAG,"--> Selección: VERIFICAR AVANCE" );
                     if (perfil.isDecanato())
                         intent.putExtra("perfil", Perfiles.DECANO);
                     if (perfil.isDirector_ss())
@@ -147,6 +152,8 @@ public class BienvenidoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Muestra el modulo de Verificar Registro de Silabus
         cvVerificarSilabus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +163,7 @@ public class BienvenidoActivity extends AppCompatActivity {
                     intent.putExtra("id",idUsuario);
                     intent.putExtra("nombre", nombre);
                     intent.putExtra("apellido", apellido);
+                    Log.v(TAG,"--> Selección: VERIFICAR SILABUS" );
                     if (perfil.isDecanato())
                         intent.putExtra("perfil", Perfiles.DECANO);
                     if (perfil.isDirector_ss())
@@ -168,10 +176,10 @@ public class BienvenidoActivity extends AppCompatActivity {
         });
     }
 
+    //Obtener los datos del usuario ingresado y muestra sus opciones segun su perfil
     public void updateUI(FirebaseUser user){
         if(user != null){
             final String idUsuario = user.getEmail().substring(0,user.getEmail().indexOf("@"));
-
             DocumentReference docRef2 = db.collection("usuarios").document(idUsuario);
             docRef2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -181,28 +189,37 @@ public class BienvenidoActivity extends AppCompatActivity {
                     nombre = usuario.getNombres();
                     apellido = usuario.getApellidos();
                     txtIdUsuario.setText(idUsuario);
-                    txtIdUsuario.setText(idUsuario);
+
                     if(perfil.isAdministrador()){
-                        cvGestionarUsuarios.setVisibility(View.VISIBLE);
-//                        cvRegistrarSilabus.setVisibility(View.VISIBLE);
-//                        cvRegistrarAvance.setVisibility(View.VISIBLE);
-//                        cvVerificarAvance.setVisibility(View.VISIBLE);
+                        cvBaseDatos.setVisibility(View.VISIBLE);
+                        txtNombreUsuario.setText("Bienvenido\n " + "\nADMINISTRADOR");
                     }
+
+                    if(perfil.isDelegado()){
+                        cvRegistrarAvance.setVisibility(View.VISIBLE);
+                        txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nALUMNO");
+                    }
+
+                    if(perfil.isProfesor() && perfil.isCoordinador()){
+                        cvRegistrarAvance.setVisibility(View.VISIBLE);
+                        cvRegistrarSilabus.setVisibility(View.VISIBLE);
+                        txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nCOORDINADOR DE CURSO");
+                    }
+
+                    if(perfil.isProfesor() && !perfil.isCoordinador()){
+                        cvRegistrarAvance.setVisibility(View.VISIBLE);
+                        txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nPROFESOR");
+                    }
+
                     if(perfil.isDecanato() || perfil.isDirector_ss() || perfil.isDirector_sw()){
                         cvVerificarAvance.setVisibility(View.VISIBLE);
                         cvVerificarSilabus.setVisibility(View.VISIBLE);
-                        if(perfil.isDecanato())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDecano");
-                        if(perfil.isDirector_sw())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDirector de Escuela Software");
-                        if(perfil.isDirector_ss())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDirector de Escuela Sistemas");
-                    }
-                    if(perfil.isCoordinador()) {
-                        cvRegistrarSilabus.setVisibility(View.VISIBLE);
-                        txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nCoordinador de Curso");
-                    }
-                    if (perfil.isProfesor() || perfil.isDelegado()) {
-                        cvRegistrarAvance.setVisibility(View.VISIBLE);
-                        if(perfil.isProfesor())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nProfesor de Curso");
-                        if(perfil.isDelegado())txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDelegado de curso");
+                        if(perfil.isDecanato())
+                            txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDecano");
+                        if(perfil.isDirector_sw())
+                            txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDirector de Escuela Software");
+                        if(perfil.isDirector_ss())
+                            txtNombreUsuario.setText("Bienvenido\n " + (nombre + " " + apellido).toUpperCase() +"\nDirector de Escuela Sistemas");
                     }
                     btnCerrarSesion.setVisibility(View.VISIBLE);
                     txtCargando.setVisibility(View.GONE);
@@ -212,27 +229,14 @@ public class BienvenidoActivity extends AppCompatActivity {
     }
 
     public void cerrarSesion(){
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setMessage("¿DESEA CERRAR SESIÓN Y SALIR DE LA APP?");
-//        builder.setNegativeButton("CANCELAR", null);
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @SuppressLint("NewApi")
-//            public void onClick(DialogInterface dialog, int id) {
-//                firebaseAuth.getInstance().signOut();
-//                finishAffinity();
-//                dialog.dismiss();
-//            }
-//        });
-//        final AlertDialog alertDialog = builder.create();
-//        alertDialog.show();
-
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("¿DESEA CERRAR SESIÓN?");
-        builder.setNegativeButton("CANCELAR", null);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+        dialogo.setMessage("¿DESEA CERRAR SESIÓN?");
+        dialogo.setNegativeButton("CANCELAR", null);
+        dialogo.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @SuppressLint("NewApi")
-            public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int which) {
+                String id = currentUser.getEmail().substring(0,currentUser.getEmail().indexOf("@"));
+                Log.v(TAG,"--> SESION CERRADA, USUARIO: " + id );
                 firebaseAuth.getInstance().signOut();
                 finishAffinity();
                 dialog.dismiss();
@@ -241,8 +245,7 @@ public class BienvenidoActivity extends AppCompatActivity {
                 finish();
             }
         });
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        dialogo.show();
     }
 
     @SuppressLint("NewApi")
@@ -254,3 +257,4 @@ public class BienvenidoActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 }
+
